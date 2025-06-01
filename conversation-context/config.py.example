@@ -1,0 +1,39 @@
+"""
+Configs for Redis MCP Assistant
+"""
+import os
+
+# Redis Cloud Configuration
+REDIS_CONFIG = {
+    "REDIS_HOST": "your-redis-endpoint.com",
+    "REDIS_PORT": "12345",
+    "REDIS_USERNAME": "default",
+    "REDIS_PWD": "your_redis_password"
+}
+
+# MCP Server Configuration
+MCP_CONFIG = {
+    "command": "/opt/homebrew/bin/uv",  # Result of: which uv
+    "mcp_redis_path": "/path/to/your/mcp-redis/src/",
+    "mcp_redis_cloud_path": "/path/to/your/mcp-redis-cloud/src/"
+}
+
+OPENAI_CONFIG = {
+    "model": "gpt-4o-mini"  # Tends to be cheaper than gpt-4o
+}
+
+# Choose which MCP server to use
+# Set to "cloud" for Redis Cloud, "operations" for Redis DB Operations 
+USE_REDIS_TYPE = "operations"
+
+# Get the appropriate MCP path
+def get_mcp_path():
+    if USE_REDIS_TYPE == "cloud":
+        return MCP_CONFIG["mcp_redis_cloud_path"]
+    else:
+        return MCP_CONFIG["mcp_redis_path"]
+
+# Override with environment variables if present
+for key in REDIS_CONFIG:
+    if os.getenv(key):
+        REDIS_CONFIG[key] = os.getenv(key)
