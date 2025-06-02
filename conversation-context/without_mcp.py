@@ -52,8 +52,7 @@ def chat_with_ai(user_input, history):
     return response.choices[0].message.content
 
 def main():
-    print("Traditional Redis Demo - Chat with persistent memory")
-    print("(Notice all the Redis code we had to write!)\n")
+    print(" Non-MCP Redis Demo.")
     
     while True:
         user_input = input("You: ")
