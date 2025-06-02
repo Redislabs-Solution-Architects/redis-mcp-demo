@@ -1,111 +1,68 @@
-# Redis MCP Conversation Demo
+# Conversation Context Demo
 
-Shows how to use Redis with MCP (Model Context Protocol) for conversation storage. No Redis commands needed - just talk to the AI and it handles Redis operations automatically.
+This demo shows how LLMs can directly read and write Redis data through natural language using MCP
 
-## What You Need
+## What It Does
 
-- Redis Cloud database (free tier works)
-- OpenAI API key with billing enabled
-- Python 3.8+
-- uv package manager
+- **LLM stores data:** Tell the AI "My name is Yusuf". it writes to Redis automatically
+- **LLM retrieves data:** Ask "What's my name?". it reads from Redis and answers
+- **Data persists:** Close the app, restart, ask again. data survives in Redis
+- **Watch it happen:** Use RedisInsight to see Redis data updating in real-time
 
-## Setup
+## Demo Files
 
-Clone the Redis MCP server:
+- `redis_mcp_showcase.py` - LLM with Redis MCP (simple)
+- `without_mcp.py` - Traditional Redis integration (complex)
+
+## Setup Instructions
+
+### 1. Get Redis Cloud Database (Free)
+- Go to https://app.redislabs.com
+- Create account and new database
+- Copy: endpoint, port, password
+
+### 2. Get OpenAI API Key
+- Go to https://platform.openai.com/api-keys
+- Create new API key -> Ensure you have credit 
+
+### 3. Clone Redis MCP Server
 ```bash
 git clone https://github.com/redis/mcp-redis.git
 cd mcp-redis
 uv venv && source .venv/bin/activate && uv sync
 ```
 
-Get Redis Cloud credentials:
-1. Create database at https://app.redislabs.com
-2. Copy endpoint, port, password
-
-Get OpenAI API key:
-1. Get key from https://platform.openai.com/api-keys
-2. Add billing at https://platform.openai.com/account/billing
-
-Configure the demo:
+### 4. Configure Demo
 ```bash
 cd redis-mcp-demo/conversation-context
 cp config.py.example config.py
-# Edit config.py with your Redis and path details
-# Optionally change the OpenAI model (default: gpt-4o-mini)
+# Edit config.py - add your Redis credentials and MCP path
 ```
 
-## Run the Demo
+### 5. Run Demo (2 Terminals)
 
-Terminal 1 - Start Redis MCP server:
+**Terminal 1** - Start MCP Server:
 ```bash
 cd /path/to/mcp-redis
 REDIS_HOST=your-endpoint REDIS_PORT=12345 REDIS_PWD=your-password uv run src/main.py
 ```
 
-Terminal 2 - Run the assistant:
+**Terminal 2** - Run Demo:
 ```bash
-cd redis-mcp-demo/conversation-context
-export OPENAI_API_KEY=your_key
-python3 -m pip install -r requirements.txt
-python redis_assistant.py
+cd conversation-context
+export OPENAI_API_KEY=your-key
+pip install -r requirements.txt
+python3 redis_mcp_showcase.py
 ```
 
-## Demo Commands
+## Quick Test
 
-Try these in order:
+1. Say: "I like pizza"
+2. **It remembers!** Check RedisInsight to see the Redis data.
+3. Exit and restart
+4. Ask: "What do I like?"
 
-**Test connection:**
-```
-❓> ping
-```
+## Key Insight
 
-**Store data:**
-```
-❓> Store my name as "John" with key "user:name"
-```
-
-**Get data:**
-```
-❓> Get the value for key "user:name"
-```
-
-**Create hash:**
-```
-❓> Create a user profile hash with name="John", role="Developer", location="SF"
-```
-
-**Make a list:**
-```
-❓> Create a list called "languages" with Python, JavaScript, Go
-```
-
-**Check conversation log:**
-```
-❓> What's in the app:logger stream?
-```
-
-**Complex query:**
-```
-❓> Get my profile and languages, then suggest what I should build next
-```
-
-## What This Shows
-
-- Store and retrieve Redis data through conversation
-- AI automatically logs all interactions to Redis streams
-- No Redis expertise needed - just describe what you want
-- Same Redis functionality, way easier to use
-
-## Files
-
-- `redis_assistant.py` - Main demo code
-- `config.py.example` - Configuration template  
-- `requirements.txt` - Dependencies
-
-## Architecture
-
-```
-You type → AI Agent → MCP Server → Redis Cloud
-```
-
-The AI handles all Redis operations automatically. You just tell it what you want in plain English.
+**Without MCP:** Developers write Redis connection code, serialization, error handling.
+**With MCP:** LLM handles all Redis operations through conversation. This enables any LLM application to have persistent memory powered by Redis with zero database code.
