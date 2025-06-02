@@ -24,7 +24,7 @@ async def main():
         model=OPENAI_CONFIG["model"]
     )
     
-    print("Redis MCP Demo - Chat with persistent memory\n")
+    print("Redis MCP Demo\n")
     
     # Chat loop
     while True:

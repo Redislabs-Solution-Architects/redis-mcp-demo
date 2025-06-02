@@ -2,9 +2,9 @@
 
 This demo shows how LLMs can directly read and write Redis data through natural language using MCP
 
-## What It Does
+## Simple Example of What It Does
 
-- **LLM stores data:** Tell the AI "My name is Yusuf". it writes to Redis automatically
+- **LLM stores data:** Tell the AI "My name is Yusuf, I like to eat Oranges". it writes to Redis automatically
 - **LLM retrieves data:** Ask "What's my name?". it reads from Redis and answers
 - **Data persists:** Close the app, restart, ask again. data survives in Redis
 - **Watch it happen:** Use RedisInsight to see Redis data updating in real-time

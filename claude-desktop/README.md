@@ -2,7 +2,7 @@
 
 **Rapidly prototype Redis infrastructure through conversation.** Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
 **Value:**
-- **Database setup:** "Create an e-commerce database" → Done in seconds
+- **Database setup:** "Create an e-commerce database" → Created in Seconds
 - **Health monitoring:** "Check my Redis Database" → Instant status reports  
 - **Data seeding:** "Add 1000 realistic users" → No need to create time consuming scripts to simulate user data
 - **Pattern discovery:** "What's the best structure for leaderboards?" → AI suggests optimal data storage and retrieval patterns
