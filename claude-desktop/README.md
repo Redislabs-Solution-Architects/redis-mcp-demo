@@ -1,4 +1,4 @@
-# Chat Your Way to Redis Infra & Data
+# Claude Desktop: Redis Infrastructure & Data Management
 
 Shows how you can rapidly prototype Redis infrastructure and structure through conversation. Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
 - **Database setup:** "Create an e-commerce database" → Created in Seconds
