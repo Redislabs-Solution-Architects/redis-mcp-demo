@@ -1,7 +1,6 @@
-# Redis Infrastructure Prototyping with Claude Desktop
+# Chat Your Way to Redis Infra & Data
 
-**Rapidly prototype Redis infrastructure through conversation.** Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
-**Value:**
+Shows how you can rapidly prototype Redis infrastructure and structure through conversation. Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
 - **Database setup:** "Create an e-commerce database" → Created in Seconds
 - **Health monitoring:** "Check my Redis Database" → Instant status reports  
 - **Data seeding:** "Add 1000 realistic users" → No need to create time consuming scripts to simulate user data
