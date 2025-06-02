@@ -1,9 +1,14 @@
-# Redis MCP Setup for Claude Desktop
+# Redis Infrastructure Prototyping with Claude Desktop
 
-Connect Claude Desktop to Redis using MCP (Model Context Protocol) servers. This lets you manage Redis through natural language instead of commands.
+**Rapidly prototype Redis infrastructure through conversation.** Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
+**Value:**
+- **Database setup:** "Create an e-commerce database" → Done in seconds
+- **Health monitoring:** "Check my Redis Database" → Instant status reports  
+- **Data seeding:** "Add 1000 realistic users" → No need to create time consuming scripts to simulate user data
+- **Pattern discovery:** "What's the best structure for leaderboards?" → AI suggests optimal data storage and retrieval patterns
+
 
 ## What You Need
-
 - Claude Desktop installed
 - Redis Cloud Account
 
@@ -42,7 +47,7 @@ Add this (replace the placeholder values):
 ```json
 {
   "mcpServers": {
-    "redis": {
+    "redis-data-operations": {
       "command": "/opt/homebrew/bin/uv",
       "args": [
         "--directory",
@@ -92,7 +97,7 @@ Add this to your config file:
 ```json
 {
   "mcpServers": {
-    "redis-cloud": {
+    "redis-cloud-management": {
       "command": "node",
       "args": [
         "--experimental-fetch",
@@ -120,7 +125,7 @@ Follow both setups above, then combine the configs:
 ```json
 {
   "mcpServers": {
-    "redis": {
+    "redis-data-operations": {
       "command": "/opt/homebrew/bin/uv",
       "args": [
         "--directory",
@@ -135,7 +140,7 @@ Follow both setups above, then combine the configs:
         "REDIS_SSL": "true"
       }
     },
-    "redis-cloud": {
+    "redis-cloud-management": {
       "command": "node",
       "args": [
         "--experimental-fetch",
