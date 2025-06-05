@@ -1,0 +1,6 @@
+openai-agents==0.0.16
+openai
+mcp>=0.3.0
+redis>=4.0.0
+sentence-transformers==2.2.2
+numpy

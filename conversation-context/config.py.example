@@ -19,7 +19,7 @@ MCP_CONFIG = {
 }
 
 OPENAI_CONFIG = {
-    "model": "gpt-4o-mini"  # Tends to be cheaper than gpt-4o
+    "model": "gpt-4o" 
 }
 
 # Choose which MCP server to use

@@ -32,7 +32,7 @@ async def main():
         if user_input.lower() in ["exit", "quit"]:
             break
             
-        # Send to AI
+        # Send to llm
         result = Runner.run_streamed(agent, user_input)
         
         # Print response

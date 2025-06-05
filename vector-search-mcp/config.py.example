@@ -1,0 +1,18 @@
+"""
+Configuration for Redis Vector Search MCP Tool
+"""
+import os
+
+# Redis Cloud Configuration
+REDIS_CONFIG = {
+    "REDIS_HOST": "your-redis-endpoint.com",
+    "REDIS_PORT": "12345",
+    "REDIS_USERNAME": "default",
+    "REDIS_PWD": "your_redis_password",
+    "REDIS_SSL": "true"
+}
+
+# Override with environment variables if present
+for key in REDIS_CONFIG:
+    if os.getenv(key):
+        REDIS_CONFIG[key] = os.getenv(key)

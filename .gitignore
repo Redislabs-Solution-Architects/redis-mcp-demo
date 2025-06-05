@@ -1,5 +1,6 @@
 # Configuration files with secrets
 config.py
+claude-desktop/claude_desktop_config_example.json
 
 # Environment files
 .env
