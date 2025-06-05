@@ -18,7 +18,7 @@ Can you check the health and performance of my Redis databases?
 ## 3. Create New Database
 
 ```
-Create a new Redis database called "ecommerce-demo" using the Essentials free tier. Set it up for an e-commerce application with standard configuration.
+Create a new Redis database called "ecommerce-demo" using the Essentials 250MB plan. Set it up for an e-commerce application with standard configuration.
 ```
 
 *Creates database and provides connection details*

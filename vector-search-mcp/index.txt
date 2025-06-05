@@ -1,0 +1,19 @@
+This is just an example vector which has been added to the DB.
+
+MOVIE_VECTOR_INDEX = {
+    "name": "idx:movies_vector",
+    "on": "HASH", 
+    "prefix": ["movie:"],
+    "schema": [
+        ("title", "TEXT", "WEIGHT", "5.0"),
+        ("plot", "TEXT"),
+        ("genre", "TAG"),
+        ("release_year", "NUMERIC", "SORTABLE"),
+        ("rating", "NUMERIC", "SORTABLE"),
+        
+        ("plot_embedding", "VECTOR", "HNSW", "6",
+         "TYPE", "FLOAT32",
+         "DIM", "384", 
+         "DISTANCE_METRIC", "COSINE")
+    ]
+}

@@ -6,7 +6,7 @@ from config import REDIS_CONFIG, MCP_CONFIG, OPENAI_CONFIG, get_mcp_path
 
 
 async def main():
-    # Connect to Redis MCP
+    # connect to the MCP server
     server = MCPServerStdio(
         params={
             "command": MCP_CONFIG["command"],
@@ -16,7 +16,7 @@ async def main():
     )
     await server.connect()
     
-    # Create AI agent with Redis memory
+    # use agent with the mcp 
     agent = Agent(
         name="Redis AI",
         instructions="You have persistent memory powered by Redis. Store all conversations in the Redis stream 'chat:history' and retrieve from it when answering questions.",
@@ -26,13 +26,13 @@ async def main():
     
     print("Redis MCP Demo\n")
     
-    # Chat loop
+    # chatbot loop
     while True:
         user_input = input("You: ")
         if user_input.lower() in ["exit", "quit"]:
             break
             
-        # Send to llm
+        # runner for orchestrating the agent
         result = Runner.run_streamed(agent, user_input)
         
         # Print response

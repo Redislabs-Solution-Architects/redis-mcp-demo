@@ -11,7 +11,7 @@ Natural language movie search powered by Redis vector embeddings and MCP (Model 
 
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 # Set OpenAI API key
 export OPENAI_API_KEY=your_openai_api_key
@@ -20,7 +20,7 @@ export OPENAI_API_KEY=your_openai_api_key
 # Edit MCP_CONFIG["mcp_redis_path"] in config.py
 
 # Run the CLI
-python vector_search_cli.py
+python3 vector_search_cli.py
 ```
 
 ## Configuration

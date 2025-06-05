@@ -1,18 +1,15 @@
 # Claude Desktop: Redis Infrastructure & Data Management
 
-Shows how you can rapidly prototype Redis infrastructure and structure through conversation. Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
-- **Database setup:** "Create an e-commerce database" → Created in Seconds
-- **Health monitoring:** "Check my Redis Database" → Instant status reports  
-- **Data seeding:** "Add 1000 realistic users" → No need to create time consuming scripts to simulate user data
-- **Pattern discovery:** "What's the best structure for leaderboards?" → AI suggests optimal data storage and retrieval patterns
+Shows how you can deploy Redis infrastructure and structure through conversation. Create databases, run health checks, seed test data, and discover optimal patterns. All within a single ChatBot conversation.
 
+Check out [demo-prompts.md](demo-prompts.md) for commands you can copy-paste to show off Redis MCP.
 
 ## What You Need
 - Claude Desktop installed
 - Redis Cloud Account
 
 ## Choose Your Setup
-Pick what you want to demo:
+**Pick what you want to demo**:
 
 | Setup | What It Does | Good For |
 |-------|--------------|----------|
@@ -156,28 +153,7 @@ Follow both setups above, then combine the configs:
 
 ## Test Everything Works
 
-1. Quit Claude Desktop completely!
+1. Quit Claude Desktop completely
 2. Start it again
 3. Open a new chat
-4. Try these:
-
-**Test redis-mcp:**
-```
-Can you connect to Redis?
-```
-
-**Test redis-mcp-cloud:**
-```
-Show me my Redis Cloud account info
-```
-
-**Test both:**
-```
-What Redis capabilities do you have?
-```
-
-Claude should respond with what it can do, not error messages.
-
-## Ready to Demo
-
-Once this is working, check out [demo-prompts.md](demo-prompts.md) for commands you can copy-paste to show off Redis MCP.
+4. Try these  [demo-prompts.md](demo-prompts.md) 

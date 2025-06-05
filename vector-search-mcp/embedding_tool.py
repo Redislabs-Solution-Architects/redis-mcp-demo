@@ -3,7 +3,7 @@ Text-to-embedding conversion tool for semantic search
 """
 
 import os
-# Fix HuggingFace tokenizers warning
+# huggingface warning suppression. Not sure if needed
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import numpy as np
@@ -23,7 +23,6 @@ class MovieEmbeddings:
         embedding = self.model.encode(text, convert_to_numpy=True)
         return embedding.astype(np.float32)
 
-# Global model instance
 _movie_embeddings = None
 
 def get_movie_embeddings():
@@ -36,12 +35,6 @@ def get_movie_embeddings():
 
 def semantic_movie_search(query_text: str) -> list:
     """Generate embedding vector for movie search
-    
-    Args:
-        query_text: Natural language query
-        
-    Returns:
-        Embedding vector as list of floats
     """
     model = get_movie_embeddings()
     embedding = model.generate_embedding(query_text)

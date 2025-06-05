@@ -38,7 +38,7 @@ def create_movie_search_agent(server):
 def create_search_prompt(user_input: str) -> str:
     """Generate embedding and create search prompt"""
     embedding = semantic_movie_search(user_input)
-    print(" Done: Converted to semantic search \n")
+    print(" Done: Converted text to embedding \n")
     
     return f'v:{embedding}'
 
