@@ -1,5 +1,5 @@
 """
-Redis Vector Search CLI - Interactive movie search using semantic embeddings
+Redis Vector Search CLI  movie search using semantic embeddings
 """
 
 import asyncio
@@ -14,10 +14,11 @@ from agents import Agent, Runner
 from openai.types.responses import ResponseTextDeltaEvent
 from config import REDIS_CONFIG, MCP_CONFIG, OPENAI_CONFIG, get_mcp_path
 from embedding_tool import semantic_movie_search, get_movie_embeddings
-from agent_instructions import MOVIE_SEARCH_AGENT_INSTRUCTIONS
 from shared.mcp_utils import validate_environment, initialize_mcp_server
 
+MOVIE_SEARCH_AGENT_INSTRUCTIONS = "Find me the top 2 movies with the given vector. The index_name is movies_vector, the vector_field is plot_embedding. On each movie return the fields title and plot. Include similarity scores."
 
+## TODO: Add embedding creation to MCP server. Embeddings are too token rich for LLMs -> Hitting Rate Limits. Process on MCP server instead of client side
 def initialize_embedding_model():
     """Load embedding model for semantic search"""
     print(" Initializing embedding model for semantic search...")
@@ -27,45 +28,26 @@ def initialize_embedding_model():
 def create_movie_search_agent(server):
     """Create AI agent specialized for movie search"""
     return Agent(
-        name="Movie Search AI",
+        name="Movie Search Agent",
         instructions=MOVIE_SEARCH_AGENT_INSTRUCTIONS,
         mcp_servers=[server],
         model=OPENAI_CONFIG["model"]
     )
 
 
-def is_movie_search_query(user_input: str) -> bool:
-    """Determine if user input is a movie search query"""
-    movie_keywords = ["find", "show", "search", "want", "movies", "films", "movie", "film"]
-    return any(keyword in user_input.lower() for keyword in movie_keywords)
-
-
 def create_search_prompt(user_input: str) -> str:
-    """Create enhanced prompt with vector search parameters"""
-    search_params = semantic_movie_search(user_input, k=3)
+    """Generate embedding and create search prompt"""
+    embedding = semantic_movie_search(user_input)
     print(" Done: Converted to semantic search \n")
-
-    return f"""User query: "{user_input}"
-
-Perform semantic vector search using the vector_search_hash tool with these exact parameters:
-- query_vector: {search_params['query_vector']}
-- index_name: "{search_params['index_name']}"
-- vector_field: "{search_params['vector_field']}"
-- k: {search_params['k']}
-- return_fields: {search_params['return_fields']} 
-
-Return results quickly"""
+    
+    return f'v:{embedding}'
 
 
 async def handle_user_query(agent, user_input: str):
     """Process user query and return AI response"""
-    if is_movie_search_query(user_input):
-        prompt = create_search_prompt(user_input)
-    else:
-        prompt = user_input
+    prompt = create_search_prompt(user_input)
+    print(" Sending embedded vector to LLM \n")
     
-    print(" Sending embeddeded vector to LLM \n")
-
     return Runner.run_streamed(agent, prompt)
 
 

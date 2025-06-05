@@ -11,7 +11,7 @@ from sentence_transformers import SentenceTransformer
 
 class MovieEmbeddings:
     def __init__(self, model_name='all-MiniLM-L6-v2'):
-        """Initialize embedding model. Using MiniLM for fast, high-quality embeddings."""
+        """Initialize embedding model.."""
         self.model = SentenceTransformer(model_name)
         self.dimension = self.model.get_sentence_embedding_dimension()
         print(f" Embedding model loaded! Dimension: {self.dimension}")
@@ -34,24 +34,15 @@ def get_movie_embeddings():
         _movie_embeddings = MovieEmbeddings()
     return _movie_embeddings
 
-def semantic_movie_search(query_text: str, k: int = 5) -> dict:
-    """Prepare semantic search parameters for Redis vector search
+def semantic_movie_search(query_text: str) -> list:
+    """Generate embedding vector for movie search
     
     Args:
         query_text: Natural language query
-        k: Number of results to return
         
     Returns:
-        Dictionary with search parameters for vector_search_hash tool
+        Embedding vector as list of floats
     """
     model = get_movie_embeddings()
     embedding = model.generate_embedding(query_text)
-    query_vector = embedding.astype(float).tolist()
-    
-    return {
-        "query_vector": query_vector,
-        "index_name": "idx:movies_vector", 
-        "vector_field": "plot_embedding",
-        "k": k,
-        "return_fields": ["title", "plot", "genre", "release_year", "rating"]
-    }
+    return embedding.astype(float).tolist()
