@@ -2,6 +2,19 @@
 
 Natural language movie search powered by Redis vector embeddings and MCP (Model Context Protocol).
 
+## Loading Movie Data
+
+To load the movie dataset into Redis with vector search:
+1. Clone the Redis Search Showcase repository:
+   ```bash
+   git clone https://github.com/Redislabs-Solution-Architects/redis-search-showcase
+   cd redis-search-showcase
+   ```
+2. Run the setup script and choose **Flow 2** when prompted:
+   ```bash
+   python3 run.py setup
+   ```
+
 ## Prerequisites
 - Redis database with movie data and vector embeddings
 - OpenAI API key
