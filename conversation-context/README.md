@@ -26,6 +26,8 @@ This demo shows how LLMs can directly read and write Redis data through natural 
 - Create new API key -> Ensure you have credit 
 
 ### 3. Clone Redis MCP Server
+In order to connect to Redis, an MCP Server needs to be downloaded and running. The following commands download the MCP Redis Server Repo. In Step 5, you will begin running the server. 
+
 ```bash
 git clone https://github.com/redis/mcp-redis.git
 cd mcp-redis

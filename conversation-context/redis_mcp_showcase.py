@@ -16,7 +16,7 @@ async def main():
     )
     await server.connect()
     
-    # use agent with the mcp 
+    # use OpenAI Agent with Redis MCP
     agent = Agent(
         name="Redis AI",
         instructions="You have persistent memory powered by Redis. Store all conversations in the Redis stream 'chat:history' and retrieve from it when answering questions.",
@@ -26,8 +26,7 @@ async def main():
     
     print("Redis MCP Demo\n")
     
-    # chatbot loop
-    while True:
+    while True:     # chatbot loop
         user_input = input("You: ")
         if user_input.lower() in ["exit", "quit"]:
             break

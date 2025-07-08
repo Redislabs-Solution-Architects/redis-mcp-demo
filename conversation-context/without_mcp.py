@@ -20,6 +20,7 @@ def store_message(role, content):
         'content': content,
         'timestamp': datetime.now().isoformat()
     }
+    # Add message to Redis stream
     redis_client.xadd('chat:history', {'data': json.dumps(message_data)})
 
 
@@ -31,14 +32,16 @@ def get_conversation_history():
     for msg_id, data in messages:
         message = json.loads(data['data'])
         history.append(f"{message['role']}: {message['content']}")
-    
-    return "\n".join(history[-20:])  # Last 20 messages
+    # Return the last 20 messages for LLM context, from redis stream
+    return "\n".join(history[-20:])  
 
 ### function to send user input to OpenAI and get a response
 def chat_with_ai(user_input, history):
     messages = [
-        {"role": "system", "content": "You are a helpful assistant. Use the conversation history for context."},
-        {"role": "user", "content": f"Conversation history:\n{history}\n\nUser: {user_input}"}
+        {"role": "system",
+          "content": "You are a helpful assistant. Use the conversation history for context."},
+        {"role": "user", 
+         "content": f"Conversation history:\n{history}\n\nUser: {user_input}"}
     ]
     
     response = client.chat.completions.create(
