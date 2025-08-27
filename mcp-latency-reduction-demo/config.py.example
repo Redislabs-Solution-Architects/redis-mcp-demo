@@ -1,0 +1,38 @@
+"""
+Configuration for Redis MCP Latency Reduction Demo
+"""
+import os
+
+# Redis Cloud Configuration (from existing demo config)
+REDIS_CONFIG = {
+    "url": os.getenv("REDIS_URL", "STUB_VALUE"),
+    "host": os.getenv("REDIS_HOST", "STUB_VALUE"),
+    "port": int(os.getenv("REDIS_PORT", "STUB_VALUE")),
+    "username": os.getenv("REDIS_USERNAME", "default"),
+    "password": os.getenv("REDIS_PWD", "STUB_VALUE"),
+}
+
+# OpenAI Configuration for real LLM calls
+OPENAI_CONFIG = {
+    "api_key": os.getenv("OPENAI_API_KEY", "STUB_VALUE"),
+    "model": os.getenv("OPENAI_MODEL", "gpt-4o"),
+    "max_tokens": int(os.getenv("OPENAI_MAX_TOKENS", "1000")),
+    "temperature": float(os.getenv("OPENAI_TEMPERATURE", "0.1")),
+}
+
+# Demo Configuration
+DEMO_CONFIG = {
+    "port": int(os.getenv("PORT", "3001")),
+    "host": os.getenv("HOST", "0.0.0.0"),
+    "debug": os.getenv("NODE_ENV", "development") == "development",
+    "enable_mock_mode": os.getenv("ENABLE_MOCK_MODE", "true").lower() == "true",
+}
+
+# Performance Settings
+PERFORMANCE_CONFIG = {
+    "cache_ttl": int(os.getenv("REDIS_CACHE_TTL", "300")),  # 5 minutes
+    "vector_dim": int(os.getenv("REDIS_VECTOR_DIM", "384")),  #  match sentence-transformers all-MiniLM-L6-v2
+    "similarity_threshold": float(os.getenv("SIMILARITY_THRESHOLD", "0.2")),
+    "cache_similarity_threshold": float(os.getenv("CACHE_SIMILARITY_THRESHOLD", "0.70")),
+    "max_vector_search_results": int(os.getenv("MAX_VECTOR_SEARCH_RESULTS", "10")),
+}
