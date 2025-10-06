@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redis MCP Performance Enhancement</title>
+    <title>Dynamic Tool Selection Demo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -390,7 +390,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h1 class="text-lg font-semibold text-gray-900">Technical Support Assistant</h1>
+                    <h1 class="text-lg font-semibold text-gray-900">Assistant - Customer Support Engineer</h1>
                 </div>
                 <div class="flex items-center space-x-3">
                     <!-- Settings Button -->
@@ -465,7 +465,6 @@
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-semibold text-gray-900 mb-4">How can I help you today?</h2>
                     <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                        I can help you investigate payment issues, check system status, and manage incidents.
                     </p>
                 </div>
                
@@ -476,7 +475,7 @@
                             x-model="overlayQuery"
                             @keyup.enter.prevent="executeOverlayQuery()"
                             @keyup.escape="showOverlay = false"
-                            placeholder="What's causing the payment failures? Are there any recent error spikes? Check system status..."
+                            placeholder="Enter text here"
                             class="w-full outline-none text-lg placeholder-gray-500 resize-none"
                             rows="3"
                             autofocus
@@ -500,21 +499,21 @@
                 <!-- Sample Queries -->
                 <div class="mt-8">
                     <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-                        <button @click="overlayQuery = demoQueries.query1; executeOverlayQuery()"
+                        <button @click="overlayQuery = demoQueries.query1"
                                 class="px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors text-sm text-gray-700 hover:border-gray-300">
-                            Show payment errors from last 30 minutes
+                            Search payment processing tickets
                         </button>
-                        <button @click="overlayQuery = demoQueries.query3; executeOverlayQuery()"
+                         <button @click="overlayQuery = demoQueries.query2"
                                 class="px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors text-sm text-gray-700 hover:border-gray-300">
-                            Search for service downtime alerts
+                            Summarize payment service logs
                         </button>
-                        <button @click="overlayQuery = demoQueries.query4; executeOverlayQuery()"
+                        <button @click="overlayQuery = demoQueries.query3"
                                 class="px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors text-sm text-gray-700 hover:border-gray-300">
-                            Create PagerDuty alert
+                            Find manual payment documentation
                         </button>
-                        <button @click="overlayQuery = demoQueries.query2; executeOverlayQuery()"
+                        <button @click="overlayQuery = demoQueries.query4"
                                 class="px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors text-sm text-gray-700 hover:border-gray-300">
-                            Check system health status
+                            Create payment outage incident
                         </button>
                     </div>
                 </div>
@@ -542,7 +541,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
-                <h1 class="text-lg font-semibold text-gray-900">Technical Support Assistant</h1>
+                <h1 class="text-lg font-semibold text-gray-900">Customer Support Agent</h1>
             </div>
             <!-- Status and New Query Button -->
             <div class="flex items-center space-x-4">
@@ -627,7 +626,7 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-stone-800">Unfiltered Approach</h3>
-                                    <p class="text-sm text-stone-600">All 84 tools sent to LLM for selection</p>
+                                    <p class="text-sm text-stone-600">All tools sent to LLM for selection</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
@@ -688,7 +687,6 @@
                                 </svg>
                             </div>
 
-                            <!-- Invisible spacer matching MCP Tool Filter exact dimensions -->
                             <div class="flex flex-col items-center progress-step" style="opacity: 0; pointer-events: none;">
                                 <!-- Invisible MCP Tools above (matching bottom layout) -->
                                 <div class="flex flex-col items-center mb-2">
@@ -711,7 +709,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="font-semibold text-sm">MCP Tool Filter</div>
+                                    <div class="font-semibold text-sm">Tool Selector</div>
                                     <div class="text-xs mt-1">Vector Search</div>
                                 </div>
                             </div>
@@ -874,7 +872,7 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-emerald-800">Redis-Optimized</h3>
-                                    <p class="text-sm text-emerald-600">MCP Tool Filtering & Semantic Caching</p>
+                                    <p class="text-sm text-emerald-600">Tool Selector & Semantic Caching</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
@@ -941,9 +939,7 @@
                                 </svg>
                             </div>
                             
-                            <!-- MCP Tool Filter Step with MCP Tools above -->
                             <div class="flex flex-col items-center progress-step redis-highlight">
-                                <!-- MCP Tools positioned above MCP Tool Filter -->
                                 <div class="flex flex-col items-center mb-2">
                                     <div class="bg-white border border-gray-300 rounded-lg px-3 py-2 shadow-sm cursor-pointer hover:border-gray-400 transition-all"
                                          @click="showAllToolsModal()">
@@ -955,11 +951,9 @@
                                             <span class="text-xs text-gray-500">(<span x-text="totalTools">84</span>)</span>
                                         </div>
                                     </div>
-                                    <!-- Vertical line connecting MCP Tools to MCP Tool Filter -->
                                     <div class="w-0.5 h-6 bg-gray-300"></div>
                                 </div>
                                 
-                                <!-- MCP Tool Filter Box -->
                                 <div class="relative">
                                     <div class="w-20 h-20 rounded-xl border-2 flex items-center justify-center mb-3 pipeline-circle shadow-md cursor-pointer"
                                          :class="optimized.isRunning ? 'bg-emerald-50 border-emerald-300 animate-pulse active' : 
@@ -973,7 +967,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="font-semibold text-gray-900 text-sm">MCP Tool Filter</div>
+                                    <div class="font-semibold text-gray-900 text-sm">Tool Selector</div>
                                     <div class="text-xs text-gray-500 mt-1">Vector DB</div>
                                 </div>
                             </div>
@@ -1222,7 +1216,6 @@
         </div>
     </div>
 
-    <!-- Smart Tool Filtering Modal -->
     <div x-show="showFilteringModal" 
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
@@ -1243,7 +1236,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <img src="/static/redis-logo.png" alt="Redis" class="w-6 h-6">
-                        <h3 class="text-lg font-semibold text-gray-900">MCP Tool Filtering</h3>
+                        <h3 class="text-lg font-semibold text-gray-900">Dynamic Tool Selection</h3>
                     </div>
                     <button @click="showFilteringModal = false" 
                             class="text-gray-400 hover:text-gray-600 transition-colors">

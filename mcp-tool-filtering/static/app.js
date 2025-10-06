@@ -14,12 +14,12 @@ function demoApp() {
         showOverlay: true,  // Start with overlay visible
         overlayQuery: "",   // Separate query for overlay
 
-        // Demo queries
+        // Demo queries - Optimized to showcase tool confusion without Redis filtering
         demoQueries: {
-            query1: "Get the Payment System Error logs within the last 30 min",
-            query2: "What are the Payment System Error Logs from the last half hour?",
-            query3: "Search emails for payment service downtime notices",
-            query4: "Send pd alert to Payments team"
+            query1: 'Search customer support tickets with "payment processing" errors',
+            query2: "Summarize todays logs from the Payment Service. Are there any irregularities?",
+            query3: "Search our customer facing documentation to find ways for the to manually enter payment details",
+            query4: "Create a high priority incident regarding a payment service outage"
         },
 
         // All available tools - will be loaded from API
@@ -400,7 +400,8 @@ function demoApp() {
                 'microsoft': '/logos/m365.png',
                 'office365': '/logos/m365.png',
                 'pagerduty': '/logos/pagerduty.png',
-                'snowflake': '/logos/snowflake.png'
+                'snowflake': '/logos/snowflake.png',
+                'zendesk': '/logos/zendesk.png',
             };
             return logoMap[server] || null;
         },

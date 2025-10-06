@@ -53,7 +53,7 @@ def debug_log(message, *args):
 
 # Initialize FastAPI application
 app = FastAPI(
-    title="Redis MCP Tool Filtering Demo",
+    title="Redis MCP Tool Selection Demo",
     description="Cut costs. Increase accuracy. Boost performance.",
     version="1.0.0"
 )
@@ -298,7 +298,7 @@ Example response format:
                 messages=[{"role": "user", "content": input_prompt}],
                 max_tokens=OPENAI_CONFIG["max_tokens"],
                 temperature=OPENAI_CONFIG["temperature"],
-                timeout=30  # Add timeout to prevent hanging
+                timeout=30  
             )
             
             end_time = time.time()
@@ -685,14 +685,28 @@ async def index_tools_with_embeddings():
 
 def generate_enhanced_embedding_text(tool: Dict[str, Any], server_name: str) -> str:
     """Generate enhanced text for tool embeddings using natural language expansion."""
-    
+
     # Start with the tool name and full description
     text_parts = [
         tool['name'],
         tool['description']
     ]
-    
-    # Add server/service context naturally
+
+    # Add server/service context with domain-specific keywords
+    server_context = {
+        "zendesk": "customer support helpdesk ticketing customer service external customers end-users",
+        "jira": "project management internal issues development bugs tasks sprint agile",
+        "hubspot": "sales marketing CRM deals leads pipeline revenue",
+        "pagerduty": "incident response on-call alerts engineering teams escalation",
+        "datadog": "application monitoring APM logs metrics observability infrastructure",
+        "confluence": "documentation wiki knowledge base articles pages collaboration",
+        "m365": "microsoft office email teams sharepoint outlook calendar",
+        "snowflake": "data warehouse SQL analytics database queries reporting"
+    }
+
+    if server_name.lower() in server_context:
+        text_parts.append(server_context[server_name.lower()])
+
     text_parts.append(f"This {server_name} tool performs {tool['type']} operations.")
     
     # Include parameter information from inputSchema (MCP format)
@@ -722,17 +736,34 @@ def generate_enhanced_embedding_text(tool: Dict[str, Any], server_name: str) -> 
         action = tool_name_parts[1].replace('_', ' ')
         text_parts.append(f"Action: {action}")
     
-    # Add common use case keywords based on tool function
-    if 'search' in tool['name'].lower():
-        text_parts.append("search query filter find")
-    if 'log' in tool['name'].lower():
+    # Add common use case keywords based on tool function and server context
+    tool_lower = tool['name'].lower()
+    desc_lower = tool['description'].lower()
+
+    if 'search' in tool_lower:
+        text_parts.append("search query filter find lookup retrieve")
+    if 'ticket' in tool_lower or 'ticket' in desc_lower:
+        if server_name.lower() == 'zendesk':
+            text_parts.append("customer tickets support requests customer issues helpdesk")
+        elif server_name.lower() == 'hubspot':
+            text_parts.append("service hub sales tickets deals pipeline")
+    if 'log' in tool_lower:
         text_parts.append("logs logging events errors exceptions")
-    if 'trace' in tool['name'].lower():
+    if 'incident' in tool_lower or 'incident' in desc_lower:
+        text_parts.append("incident outage critical emergency production issue")
+    if 'trace' in tool_lower:
         text_parts.append("tracing spans performance monitoring")
-    if 'performance' in tool['description'].lower():
+    if 'performance' in desc_lower:
         text_parts.append("performance metrics latency errors throughput")
-    if 'error' in tool['description'].lower():
-        text_parts.append("error debugging failure investigation")
+    if 'error' in desc_lower or 'failure' in desc_lower:
+        text_parts.append("error debugging failure investigation troubleshooting")
+    if 'payment' in desc_lower:
+        text_parts.append("payment transactions billing financial money")
+    if 'customer' in desc_lower:
+        if server_name.lower() == 'zendesk':
+            text_parts.append("external customers end users support requests")
+        elif server_name.lower() == 'hubspot':
+            text_parts.append("leads prospects sales opportunities")
     
     # The full text naturally contains the semantic meaning
     return " ".join(text_parts)
@@ -1154,7 +1185,7 @@ async def process_optimized_query(query: str) -> ChatResponse:
             latency=actual_latency,
             tokens=llm_result["tokens"],
             cost=round(llm_result["cost"], 4),
-            tools_count=len(filtered_for_llm),  # Pre-filtered count
+            tools_count=len(vector_filtered_tools),  # Actual vector search results count
             cache_status=cache_status,
             vector_search_time=vector_time,
             tools_used=[tool["name"] for tool in llm_result["tools"]],

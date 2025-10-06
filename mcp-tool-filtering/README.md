@@ -1,6 +1,6 @@
-# Redis MCP Tool Filtering
+# Dynamic Tool Selection by Redis
 
-Model Context Protocol (MCP) tool filtering using Redis vector search.
+Model Context Protocol (MCP) tool selection using Redis vector search.
 
 ## Background
 

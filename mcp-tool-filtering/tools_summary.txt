@@ -1,0 +1,520 @@
+MCP TOOLS SUMMARY
+================================================================================
+
+
+[JIRA]
+----------------------------------------
+
+Tool: jira.search_issues
+Description: Advanced enterprise Jira issue search with complex JQL (Jira Query Language) queries, comprehensive filtering, field expansion, and result customization. Supports searching across multiple projects, i...
+
+Tool: jira.get_issue
+Description: Retrieve comprehensive details for a specific Jira issue including all fields, comments, attachments, work logs, and issue history. Returns structured data with custom field values, transitions, and r...
+
+Tool: jira.create_issue
+Description: Create comprehensive incidents, critical service requests, emergency escalations, and high-priority bugs for system outages and application failures. This tool provides complete incident creation capa...
+
+Tool: jira.update_issue
+Description: Update existing issues with field modifications including status changes, priority adjustments, assignee updates, and custom field values. Supports bulk field updates with validation and automatic wor...
+
+Tool: jira.transition_issue
+Description: Change issue status through configured workflow transitions with validation of required fields, conditions, and permissions. Supports automatic field population during transitions and custom workflow ...
+
+Tool: jira.get_comments
+Description: Retrieve all comments and activity history for a specific issue with author information, timestamps, and comment body content. Returns threaded conversations, @mentions, and comment metadata. Supports...
+
+Tool: jira.add_comment
+Description: Add comments and updates to existing issues with rich text formatting, @mentions, and attachment support. Comments can include visibility restrictions, automatic @mentions of watchers, and integration...
+
+Tool: jira.get_projects
+Description: List all accessible Jira projects with detailed configuration information including project keys, names, descriptions, lead information, and project-specific settings. Returns issue type schemes, work...
+
+Tool: jira.manage_project_config
+Description: Configure project settings including issue types, workflows, custom fields, and permission schemes. Supports project creation, modification, and configuration management with validation and rollback c...
+
+Tool: jira.manage_automation_rules
+Description: Create, modify, and manage automation rules for issue processing, notifications, and workflow automation. Supports complex rule conditions, multi-step actions, and integration with external systems. R...
+
+Tool: jira.get_automation_logs
+Description: Retrieve automation rule execution logs including success/failure status, execution time, and error details. Supports filtering by rule, time period, and execution status for troubleshooting and perfo...
+
+Tool: jira.create_dashboard
+Description: Create and configure dashboards with custom gadgets for issue tracking, team performance, and project analytics. Supports real-time widgets, custom filters, and sharing permissions. Returns dashboard ...
+
+Tool: jira.generate_reports
+Description: Generate comprehensive reports including burndown charts, velocity reports, control charts, and custom analytics. Supports multiple report formats, scheduling, and automated distribution. Returns repo...
+
+Tool: jira.monitor_sla
+Description: Monitor Service Level Agreement compliance including response times, resolution times, and breach warnings. Provides real-time SLA status, historical performance, and escalation triggers for critical ...
+
+Tool: jira.escalate_issue
+Description: Automatically escalate issues based on SLA breaches, priority changes, or custom escalation rules. Supports multi-level escalation, notification chains, and manager involvement. Returns escalation sta...
+
+Tool: jira.sync_external_system
+Description: Synchronize issue data with external systems including monitoring tools, chat platforms, and other service management platforms. Supports bidirectional sync, field mapping, and conflict resolution.
+
+
+[CONFLUENCE]
+----------------------------------------
+
+Tool: confluence.search_content
+Description: Search across all Confluence spaces for pages, blog posts, attachments, and comments using full-text search with advanced filtering. Returns content summaries, space information, author details, and r...
+
+Tool: confluence.get_page
+Description: Retrieve complete page content including body text, metadata, version history, and space information. Returns structured content with macro expansions, embedded media, and table data. Includes page hi...
+
+Tool: confluence.create_page
+Description: Create new documentation pages and runbooks with rich content including tables, macros, embedded media, and cross-references. Supports template-based creation, automatic labeling, and permission inher...
+
+Tool: confluence.update_page
+Description: Update existing page content, metadata, and structure with version control and change tracking. Supports partial content updates, label management, and permission modifications. Maintains complete rev...
+
+Tool: confluence.list_pages
+Description: List all pages within a space with filtering and sorting options. Returns page hierarchy, creation dates, author information, and content status. Supports filtering by labels, page status, and creatio...
+
+Tool: confluence.get_space
+Description: Get comprehensive space information including description, homepage, permissions, and content statistics. Returns space configuration, theme settings, user access levels, and content organization stru...
+
+Tool: confluence.create_space
+Description: Create new Confluence spaces with customizable templates, permissions, and initial content structure. Supports space categories, homepage creation, and user group assignments. Returns space configurat...
+
+Tool: confluence.manage_space_permissions
+Description: Configure space-level permissions including view, edit, delete, and admin access for users and groups. Supports permission inheritance, role-based access control, and audit logging. Returns current pe...
+
+Tool: confluence.manage_templates
+Description: Create, modify, and manage page templates for consistent content creation. Supports global and space-specific templates with variable substitution, form fields, and conditional content. Returns templa...
+
+Tool: confluence.manage_labels
+Description: Create, apply, and manage labels for content organization and discovery. Supports hierarchical labeling, auto-labeling rules, and label analytics. Returns label usage statistics and content associatio...
+
+Tool: confluence.get_analytics
+Description: Retrieve comprehensive analytics including page views, user engagement, content performance, and space activity. Supports trend analysis, user behavior tracking, and content optimization recommendatio...
+
+Tool: confluence.export_content
+Description: Export Confluence content in various formats including PDF, Word, XML, and HTML. Supports bulk export, custom styling, and automated scheduling. Returns export status and download links.
+
+
+[M365]
+----------------------------------------
+
+Tool: m365.search_email
+Description: Search across Exchange Online mailboxes for email messages and conversations with advanced filtering capabilities. Returns message summaries, sender/recipient information, timestamps, and attachment d...
+
+Tool: m365.send_email
+Description: Send executive notifications, leadership communication, and critical system alerts through Exchange Online for system outages and service disruptions. Supports rich formatting, attachment support, del...
+
+Tool: m365.manage_mailbox
+Description: Administer Exchange Online mailboxes including quota management, folder permissions, and retention policies. Supports mailbox migration, backup/restore operations, and compliance configuration. Return...
+
+Tool: m365.get_calendar
+Description: Retrieve calendar events and meeting information from Outlook calendars with detailed attendee lists, recurring event handling, and room/resource booking details. Returns event summaries, locations, t...
+
+Tool: m365.create_event
+Description: Create calendar events and meetings in Outlook with comprehensive scheduling features including attendee management, room booking, recurring events, and meeting options. Supports Teams meeting integra...
+
+Tool: m365.manage_room_booking
+Description: Book and manage conference rooms and resources with availability checking, equipment requests, and catering coordination. Supports recurring bookings, resource conflicts resolution, and booking polici...
+
+Tool: m365.search_teams
+Description: Search Microsoft Teams chat messages, channel conversations, and shared files across teams and channels. Returns message content, author information, timestamps, reactions, and thread context. Support...
+
+Tool: m365.send_teams_message
+Description: Send messages to Microsoft Teams channels or direct chats with rich formatting, @mentions, file attachments, and adaptive card support. Handles message threading, reactions, and integration with Teams...
+
+Tool: m365.manage_teams
+Description: Create, configure, and manage Microsoft Teams including member management, channel creation, app installation, and policy enforcement. Supports team templates, guest access, and integration with Azure...
+
+Tool: m365.manage_sharepoint_sites
+Description: Create, configure, and manage SharePoint sites including document libraries, lists, permissions, and site collections. Supports site templates, hub site associations, and content migration. Returns si...
+
+Tool: m365.search_sharepoint_content
+Description: Search across SharePoint sites for documents, lists, and content with comprehensive filtering and relevance ranking. Returns content summaries, metadata, author information, and access permissions. Su...
+
+Tool: m365.get_contacts
+Description: Retrieve contact information from Azure Active Directory and personal contact lists including distribution groups, organizational hierarchy, and contact metadata. Returns comprehensive contact details...
+
+Tool: m365.manage_user_accounts
+Description: Administer Azure AD user accounts including provisioning, license assignment, group membership, and authentication settings. Supports bulk operations, automated workflows, and compliance reporting. Re...
+
+Tool: m365.manage_power_apps
+Description: Create, deploy, and manage Power Apps applications with data source connections, user permissions, and environment configuration. Supports app sharing, version control, and usage analytics. Returns ap...
+
+Tool: m365.run_power_automate
+Description: Execute Power Automate workflows for business process automation including data synchronization, approval workflows, and notification systems. Supports flow triggering, parameter passing, and executio...
+
+
+[DATADOG]
+----------------------------------------
+
+Tool: datadog.query_metrics
+Description: Execute advanced time-series metric queries against Datadog monitoring infrastructure with comprehensive aggregation functions, mathematical operations, anomaly detection, and multi-dimensional filter...
+
+Tool: datadog.get_infrastructure_list
+Description: Retrieve comprehensive list of monitored infrastructure including hosts, containers, services, and cloud resources. Returns detailed information about system health, tags, metadata, and current status...
+
+Tool: datadog.get_host_details
+Description: Get detailed information about specific hosts including system metrics, installed agents, running processes, and network connections. Returns comprehensive host health status, performance metrics, and...
+
+Tool: datadog.trace_search
+Description: Search distributed traces for application performance analysis, request flow error investigation, and HTTP status debugging. Returns trace spans, timing information, error details, and service depende...
+
+Tool: datadog.get_service_map
+Description: Retrieve service dependency map showing relationships between microservices, external dependencies, and data flow patterns. Returns service topology, performance metrics, and error rates for each serv...
+
+Tool: datadog.analyze_service_performance
+Description: Analyze service performance including latency percentiles, HTTP error rates, request throughput, and resource utilization during application processing. Provides performance baseline comparison, anoma...
+
+Tool: datadog.create_monitor
+Description: Create custom monitors for infrastructure and application alerting with complex conditions, multi-alert support, and escalation policies. Supports threshold-based, anomaly detection, and forecasting m...
+
+Tool: datadog.get_monitor_status
+Description: Retrieve current status and history for monitors including alert states, trigger events, and resolution information. Returns detailed monitor health, performance metrics, and notification logs with tr...
+
+Tool: datadog.manage_monitor_downtime
+Description: Schedule and manage monitor downtime periods for maintenance windows, deployments, or testing. Supports recurring downtime schedules, partial monitor muting, and automated downtime management.
+
+Tool: datadog.search_logs
+Description: Search and analyze log data for error investigation, application failures, HTTP status code analysis, and system debugging. Returns log events with context, metadata, and statistical analysis. Support...
+
+Tool: datadog.create_log_pipeline
+Description: Create and configure log processing pipelines for data transformation, enrichment, and routing. Supports custom processors, filtering rules, and output destinations. Returns pipeline configuration and...
+
+Tool: datadog.create_dashboard
+Description: Create custom dashboards with widgets for metrics visualization, log analysis, and service monitoring. Supports multiple widget types, template variables, and sharing permissions. Returns dashboard co...
+
+Tool: datadog.get_dashboard_data
+Description: Retrieve data for existing dashboards including widget values, time-series data, and current status information. Supports data export, snapshot generation, and automated reporting.
+
+
+[PAGERDUTY]
+----------------------------------------
+
+Tool: pagerduty.create_incident
+Description: Create new incident alert with comprehensive details including severity, team, service association, and initial responder assignment. Supports automatic escalation triggers, stakeholder notifications,...
+
+Tool: pagerduty.get_incidents
+Description: Retrieve incidents with comprehensive filtering and sorting options. Returns incident details, timeline, responder information, and resolution status. Supports filtering by service, urgency, status, t...
+
+Tool: pagerduty.update_incident
+Description: Update incident status, assignments, priority, and other properties with comprehensive change tracking and notification management. Supports bulk updates, automated workflows, and stakeholder communic...
+
+Tool: pagerduty.add_incident_note
+Description: Add detailed notes and updates to incidents including investigation findings, action items, and status updates. Supports rich text formatting, file attachments, and automatic timeline integration.
+
+Tool: pagerduty.get_oncall_schedule
+Description: Retrieve current and upcoming on-call schedules with detailed coverage information, escalation levels, and override details. Returns schedule entries, rotation patterns, and coverage gaps with notific...
+
+Tool: pagerduty.create_override
+Description: Create temporary on-call schedule overrides for coverage during absences, special events, or maintenance windows. Supports recurring overrides, partial coverage, and automatic notifications to affecte...
+
+Tool: pagerduty.manage_escalation_policy
+Description: Create and configure escalation policies defining response procedures, timeout intervals, and escalation levels. Supports complex escalation rules, notification methods, and integration with team stru...
+
+Tool: pagerduty.get_services
+Description: List all services with configuration details, integration status, and incident statistics. Returns service health metrics, escalation policy associations, and team ownership information with maintenan...
+
+Tool: pagerduty.create_service
+Description: Create new services for incident management with integration setup, escalation policy assignment, and team ownership configuration. Supports service dependencies, maintenance windows, and monitoring i...
+
+Tool: pagerduty.manage_service_dependencies
+Description: Configure and manage service dependencies for impact analysis and cascading incident management. Supports dependency mapping, impact assessment, and automated incident correlation.
+
+Tool: pagerduty.get_analytics
+Description: Retrieve comprehensive analytics including incident metrics, response times, service performance, and team effectiveness. Provides trend analysis, benchmark comparisons, and performance optimization r...
+
+Tool: pagerduty.generate_incident_report
+Description: Generate detailed incident reports including timeline analysis, response effectiveness, and lessons learned. Supports custom report templates, automated scheduling, and stakeholder distribution.
+
+Tool: pagerduty.manage_integrations
+Description: Configure and manage integrations with monitoring tools, ticketing systems, and communication platforms. Supports integration health monitoring, configuration validation, and automated setup.
+
+
+[ZENDESK]
+----------------------------------------
+
+Tool: zendesk.search_tickets
+Description: Search tickets by customer, status, tags, priority, requester, assignee, custom fields, and time windows. Useful for triage and account overviews.
+
+Tool: zendesk.create_ticket
+Description: Create a Zendesk ticket for customer requests, onboarding tasks, or proactive outreach.
+
+Tool: zendesk.update_ticket
+Description: Update a ticket’s status, priority, fields, assignee, priority, or add tags. Supports internal/public comments.
+
+Tool: zendesk.add_internal_note
+Description: Add a private internal note to a ticket (e.g., account context, renewal details, escalation notes).
+
+Tool: zendesk.list_views
+Description: List Zendesk views available to the current user to understand queues and workload.
+
+Tool: zendesk.get_view_tickets
+Description: Retrieve tickets belonging to a specific view (e.g., ‘VIP pending’, ‘Renewals this month’).
+
+Tool: zendesk.bulk_update_tickets
+Description: Bulk update ticket fields, status, assignees, and tags—useful for campaign follow-ups or mass reassignments.
+
+Tool: zendesk.apply_macro
+Description: Apply a macro to a ticket to standardize responses or field updates.
+
+Tool: zendesk.list_macros
+Description: List available macros for the current user or group to speed up responses.
+
+Tool: zendesk.users.get
+Description: Retrieve a user by id or email to view contact details, roles, and identity mapping.
+
+Tool: zendesk.users.update
+Description: Update user properties such as role, tags, notes, or custom fields (e.g., success plan tier).
+
+Tool: zendesk.organizations.get
+Description: Fetch organization details including domains, notes, custom fields, satisfaction, and ticket history summary.
+
+Tool: zendesk.organizations.update
+Description: Update organization tags, notes, and custom fields (e.g., ARR, lifecycle stage, CSM owner).
+
+Tool: zendesk.ticket_events.get
+Description: Retrieve a ticket’s event audit trail for timeline analyses and escalation reviews.
+
+Tool: zendesk.escalate_ticket
+Description: Escalate a ticket to a higher-tier group, add critical tags, and notify stakeholders.
+
+Tool: zendesk.satisfaction.list
+Description: List CSAT survey results and ratings by ticket, requester, or time window.
+
+Tool: zendesk.satisfaction.request_survey
+Description: Trigger or resend a satisfaction survey for a solved ticket (subject to Zendesk settings).
+
+Tool: zendesk.explore.export_report
+Description: Export Explore (analytics) dashboards or queries for CSAT, SLA, backlog, and response metrics.
+
+Tool: zendesk.manage_sla_policies
+Description: Create or update SLA policies for response and resolution targets by priority or channel.
+
+Tool: zendesk.triggers.manage
+Description: Create, enable/disable, or update triggers for routing, notifications, and tagging automation.
+
+Tool: zendesk.automations.manage
+Description: Create or update time-based automations (e.g., pending > 3 days -> reminder).
+
+Tool: zendesk.views.export
+Description: Export a view’s results for offline analysis (e.g., backlog by account).
+
+Tool: zendesk.talk.call_logs
+Description: Retrieve Zendesk Talk call logs for a customer or timeframe to correlate with ticket history.
+
+Tool: zendesk.chat.transcripts
+Description: Fetch live chat or messaging transcripts for a user, ticket, or timeframe for QBRs and RCA.
+
+Tool: zendesk.help_center.search_articles
+Description: Search Help Center articles for enablement and self-serve guidance to share with customers.
+
+Tool: zendesk.help_center.create_article
+Description: Create a Help Center article draft for onboarding guides, FAQs, or playbooks.
+
+Tool: zendesk.help_center.update_article
+Description: Update or publish an existing Help Center article (e.g., add release notes, fix steps).
+
+Tool: zendesk.followup.create
+Description: Create a follow-up ticket from a closed ticket for proactive checks or action items.
+
+Tool: zendesk.tags.report
+Description: Aggregate tag usage across tickets to surface themes (bugs, feature requests, onboarding issues).
+
+Tool: zendesk.workspace.assign_tickets
+Description: Bulk assign tickets to agents or groups based on rules (round-robin, capacity, specialty).
+
+Tool: zendesk.requests.list_for_customer
+Description: List all requests created by or for a specific customer to prepare for EBR/QBRs.
+
+Tool: zendesk.sunshine.profiles.get
+Description: Retrieve Sunshine custom profiles (accounts, contacts) to enrich the customer 360 view.
+
+Tool: zendesk.sunshine.events.list
+Description: List Sunshine events (e.g., product usage, billing milestones) for an account timeline.
+
+Tool: zendesk.ticket_side_conversations.create
+Description: Start a side conversation (email/Slack) with internal/external stakeholders from a ticket.
+
+Tool: zendesk.ticket_attachments.upload
+Description: Upload and attach files (logs, screenshots, QBR decks) to a ticket.
+
+Tool: zendesk.nps.send_survey
+Description: Send an NPS survey to a list of users or an organization and track responses.
+
+Tool: zendesk.nps.results
+Description: Retrieve NPS results and breakdown (promoters, passives, detractors) over time.
+
+Tool: zendesk.ticket_fields.manage
+Description: Create or update custom ticket fields used for success plans, churn risk, or onboarding stage.
+
+Tool: zendesk.ticket_merge
+Description: Merge duplicate tickets (e.g., multiple emails from same user) while preserving comments and attachments.
+
+Tool: zendesk.subscriptions.ticket_updates
+Description: Subscribe to ticket updates that match a filter and stream changes for real-time account monitoring.
+
+Tool: zendesk.side_load_customer_timeline
+Description: Compile a customer timeline (tickets, calls, chats, Sunshine events) for QBR/EBR packets.
+
+Tool: zendesk.integrations.link_ticket
+Description: Link a Zendesk ticket to external systems (e.g., Jira issue, Salesforce case) and sync metadata.
+
+Tool: zendesk.schedule_qbr_report
+Description: Generate and schedule a QBR/EBR packet using Zendesk Explore and Help Center content for a given account.
+
+Tool: zendesk.requests.create_onboarding
+Description: Create a structured onboarding request set (tickets + tasks) for a new customer with templates.
+
+Tool: zendesk.audit_logs.search
+Description: Search admin audit logs for configuration changes affecting workflows or SLAs.
+
+
+[HUBSPOT]
+----------------------------------------
+
+Tool: hubspot.contacts.search
+Description: Search contacts by email, name, lifecycle stage, owner, domain, or custom properties.
+
+Tool: hubspot.contacts.get
+Description: Get a single contact by ID or email with selected properties.
+
+Tool: hubspot.contacts.create_or_update
+Description: Create or update a contact (upsert by email) including custom properties and owner assignment.
+
+Tool: hubspot.contacts.merge
+Description: Merge a secondary contact into a primary contact, preserving history and associations.
+
+Tool: hubspot.companies.search
+Description: Search companies by name, domain, owner, lifecycle stage, ARR, or custom properties.
+
+Tool: hubspot.companies.create_or_update
+Description: Create or update a company (upsert by domain) and set CSM-related properties (e.g., tier, risk).
+
+Tool: hubspot.associations.link
+Description: Create or update associations between records (e.g., contact↔company, ticket↔company).
+
+Tool: hubspot.deals.search
+Description: Search deals by pipeline, stage, amount, renewal date, or company.
+
+Tool: hubspot.deals.create_or_update
+Description: Create or update a deal (e.g., renewal or expansion) and associate to company/contacts.
+
+Tool: hubspot.tickets.search
+Description: Search Service Hub tickets by status, pipeline, SLA, priority, or customer.
+
+Tool: hubspot.tickets.create_or_update
+Description: Create or update a ticket and associate it with company, contact, and deal where relevant.
+
+Tool: hubspot.tasks.create
+Description: Create tasks for follow-ups, onboarding steps, or renewal prep and assign to owners with due dates.
+
+Tool: hubspot.engagements.log_note
+Description: Log a note on a contact, company, deal, or ticket (e.g., meeting summary, risk update).
+
+Tool: hubspot.meetings.create_engagement
+Description: Create a past or scheduled meeting engagement with attendees and outcomes.
+
+Tool: hubspot.properties.get
+Description: Get property definitions for a given object type (contacts, companies, deals, tickets, custom).
+
+Tool: hubspot.properties.manage
+Description: Create, update, or archive a property on a standard or custom object.
+
+Tool: hubspot.workflows.enroll
+Description: Enroll records into a HubSpot workflow (e.g., onboarding, renewal nurture, escalation alerts).
+
+Tool: hubspot.workflows.manage
+Description: Enable/disable a workflow and update enrollment triggers or actions.
+
+Tool: hubspot.lists.search_static
+Description: Find or create static lists for outreach cohorts (e.g., VIP customers, at-risk accounts).
+
+Tool: hubspot.lists.add_records
+Description: Add records (contacts/companies) to a static list by IDs or emails/domains.
+
+Tool: hubspot.sequences.enroll_contacts
+Description: Enroll contacts into a sales/service sequence for onboarding nudges or renewal reminders.
+
+Tool: hubspot.feedback_surveys.send
+Description: Send CSAT/NPS/CES feedback surveys and associate responses to contacts/companies.
+
+Tool: hubspot.feedback_surveys.results
+Description: Retrieve survey results and time-series breakdown for CSAT/NPS/CES.
+
+Tool: hubspot.playbooks.log_call_note
+Description: Open a playbook and log structured notes to a record (contact/company/deal/ticket).
+
+Tool: hubspot.quotes.create
+Description: Create a quote for renewal or expansion and associate to deals/companies/contacts.
+
+Tool: hubspot.products.list
+Description: List products and price book entries for packaging renewals or expansions.
+
+Tool: hubspot.line_items.add_to_deal
+Description: Attach product line items to a deal (quantity, term, discounts).
+
+Tool: hubspot.pipelines.stages.update
+Description: Update a pipeline stage (e.g., Deal or Ticket stages) and stage order.
+
+Tool: hubspot.reports.export
+Description: Export a HubSpot report or dashboard to CSV/PDF with optional filters for QBR packs.
+
+Tool: hubspot.timeline.events.list
+Description: List recent activities across objects (emails, calls, meetings, notes) for an account timeline.
+
+Tool: hubspot.subscription_preferences.update
+Description: Update a contact’s email subscription preferences (e.g., service updates, renewal reminders).
+
+Tool: hubspot.tickets.sla_breaches.report
+Description: Report on SLA breaches and at-risk tickets by pipeline, owner, or company.
+
+Tool: hubspot.custom_objects.search
+Description: Search custom objects (e.g., subscriptions, projects, usage) tied to CSM workflows.
+
+Tool: hubspot.custom_objects.create_or_update
+Description: Create or update a custom object record (e.g., Success Plan, Subscription) and manage associations.
+
+Tool: hubspot.integrations.salesforce.sync_status
+Description: Check Salesforce↔HubSpot sync health for a record or object type (helpful for data parity before QBRs).
+
+Tool: hubspot.emails.send_template
+Description: Send a templated email from a connected inbox to contacts with personalization tokens.
+
+Tool: hubspot.owners.list
+Description: List HubSpot owners (users) for assignment, territory routing, and reporting.
+
+Tool: hubspot.deals.renewal_forecast
+Description: Generate a renewal/expansion forecast from deals by close date, stage, and probability.
+
+Tool: hubspot.tickets.bulk_update
+Description: Bulk update ticket properties (status, priority, owner) for backlog grooming and triage.
+
+Tool: hubspot.webhooks.subscribe
+Description: Subscribe a webhook to record changes (tickets, deals, contacts) to power real-time alerts.
+
+Tool: hubspot.imports.bulk_upsert
+Description: Import CSV data to upsert contacts/companies/deals/tickets with property mappings.
+
+Tool: hubspot.ticket_snippets.apply
+Description: Insert a saved snippet into a ticket reply for standardized responses.
+
+Tool: hubspot.kb.search_articles
+Description: Search Knowledge Base articles to share with customers for faster resolution.
+
+Tool: hubspot.success_plans.generate
+Description: Create or refresh a Success Plan custom object with goals, milestones, owners, and risks.
+
+Tool: hubspot.renewals.watchlist.build
+Description: Compile a watchlist of renewals and risk signals (usage drop, low CSAT, no activity) across accounts.
+
+Tool: hubspot.user_events.usage_ingest
+Description: Upsert product usage or events (by contact or company) into a custom timeline or object.
+
+Tool: hubspot.files.upload
+Description: Upload files (QBR decks, proposals, guides) and associate to records.
+
+Tool: hubspot.tickets.side_conversations.create
+Description: Start a side conversation (email/Slack) from a ticket and keep transcript in HubSpot.
+
+Tool: hubspot.alerts.create_risk_alert
+Description: Create a risk alert (internal task/email) when churn signals are detected for a company.
+

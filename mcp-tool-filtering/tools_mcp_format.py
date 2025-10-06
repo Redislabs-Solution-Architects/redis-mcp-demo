@@ -3018,5 +3018,1525 @@ MCP_TOOLS_CONFIG = {
             },
             "type": "write"
         }
-    ]
+    ],
+    "zendesk": [
+        {
+"name": "zendesk.search_tickets",
+"description": "Search tickets by customer, status, tags, priority, requester, assignee, custom fields, and time windows. Useful for triage and account overviews.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"query": {
+"type": "string",
+"description": "Zendesk search query (supports field operators, e.g., status:open tags:vip"
+},
+"page": {
+"type": "integer",
+"description": "Page number for pagination"
+},
+"per_page": {
+"type": "integer",
+"description": "Results per page (max per API limits)"
+},
+"sort_by": {
+"type": "string",
+"description": "Sort field (e.g., created_at, updated_at, priority)"
+},
+"sort_order": {
+"type": "string",
+"description": "asc or desc"
+}
+},
+"required": [
+"query"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.create_ticket",
+"description": "Create a Zendesk ticket for customer requests, onboarding tasks, or proactive outreach.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"subject": { "type": "string", "description": "Ticket subject" },
+"comment": { "type": "string", "description": "Initial public comment" },
+"requester_id": { "type": "string", "description": "Requester user ID" },
+"assignee_id": { "type": "string", "description": "Assignee user ID" },
+"priority": { "type": "string", "description": "Priority (low, normal, high, urgent)" },
+"status": { "type": "string", "description": "Initial status (new, open, pending, on-hold)" },
+"tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to attach" },
+"custom_fields": { "type": "object", "description": "Custom field id:value map" }
+},
+"required": [
+"subject",
+"comment",
+"requester_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.update_ticket",
+"description": "Update a ticket’s status, priority, fields, assignee, priority, or add tags. Supports internal/public comments.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID to update" },
+"status": { "type": "string", "description": "new, open, pending, on-hold, solved, closed" },
+"priority": { "type": "string", "description": "low, normal, high, urgent" },
+"assignee_id": { "type": "string", "description": "New assignee user ID" },
+"group_id": { "type": "string", "description": "Assign to a group" },
+"tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to add" },
+"remove_tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to remove" },
+"custom_fields": { "type": "object", "description": "Custom field id:value map" },
+"public_comment": { "type": "string", "description": "Public reply to requester" },
+"internal_note": { "type": "string", "description": "Private note for agents only" }
+},
+"required": [
+"ticket_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.add_internal_note",
+"description": "Add a private internal note to a ticket (e.g., account context, renewal details, escalation notes).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"note": { "type": "string", "description": "Private note content" },
+"author_id": { "type": "string", "description": "Agent user ID authoring the note" }
+},
+"required": [
+"ticket_id",
+"note"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.list_views",
+"description": "List Zendesk views available to the current user to understand queues and workload.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"include_tickets_count": { "type": "boolean", "description": "If true, include counts per view" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.get_view_tickets",
+"description": "Retrieve tickets belonging to a specific view (e.g., ‘VIP pending’, ‘Renewals this month’).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"view_id": { "type": "string", "description": "View ID" },
+"page": { "type": "integer", "description": "Page number" },
+"per_page": { "type": "integer", "description": "Results per page" }
+},
+"required": [
+"view_id"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.bulk_update_tickets",
+"description": "Bulk update ticket fields, status, assignees, and tags—useful for campaign follow-ups or mass reassignments.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_ids": { "type": "array", "items": { "type": "string" }, "description": "Ticket IDs to update" },
+"status": { "type": "string", "description": "Set a new status" },
+"assignee_id": { "type": "string", "description": "Assign to an agent" },
+"tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to add" },
+"remove_tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to remove" },
+"custom_fields": { "type": "object", "description": "Custom field id:value map" }
+},
+"required": [
+"ticket_ids"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.apply_macro",
+"description": "Apply a macro to a ticket to standardize responses or field updates.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"macro_id": { "type": "string", "description": "Macro ID to apply" },
+"placeholders": { "type": "object", "description": "Optional placeholder variables to fill" }
+},
+"required": [
+"ticket_id",
+"macro_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.list_macros",
+"description": "List available macros for the current user or group to speed up responses.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"scope": { "type": "string", "description": "personal, shared, group" },
+"page": { "type": "integer", "description": "Page number" },
+"per_page": { "type": "integer", "description": "Results per page" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.users.get",
+"description": "Retrieve a user by id or email to view contact details, roles, and identity mapping.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"user_id": { "type": "string", "description": "Zendesk user ID" },
+"email": { "type": "string", "description": "User email (alternative to user_id)" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.users.update",
+"description": "Update user properties such as role, tags, notes, or custom fields (e.g., success plan tier).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"user_id": { "type": "string", "description": "Zendesk user ID" },
+"name": { "type": "string", "description": "Display name" },
+"role": { "type": "string", "description": "end-user, agent, admin" },
+"tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to add" },
+"remove_tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to remove" },
+"custom_fields": { "type": "object", "description": "Custom field id:value map" },
+"notes": { "type": "string", "description": "Internal notes about the user" }
+},
+"required": [
+"user_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.organizations.get",
+"description": "Fetch organization details including domains, notes, custom fields, satisfaction, and ticket history summary.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"organization_id": { "type": "string", "description": "Organization ID" }
+},
+"required": [
+"organization_id"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.organizations.update",
+"description": "Update organization tags, notes, and custom fields (e.g., ARR, lifecycle stage, CSM owner).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"organization_id": { "type": "string", "description": "Organization ID" },
+"tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to add" },
+"remove_tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to remove" },
+"notes": { "type": "string", "description": "Internal org notes" },
+"custom_fields": { "type": "object", "description": "Custom field id:value map" }
+},
+"required": [
+"organization_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.ticket_events.get",
+"description": "Retrieve a ticket’s event audit trail for timeline analyses and escalation reviews.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"page": { "type": "integer", "description": "Page number" }
+},
+"required": [
+"ticket_id"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.escalate_ticket",
+"description": "Escalate a ticket to a higher-tier group, add critical tags, and notify stakeholders.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"target_group_id": { "type": "string", "description": "Escalation group ID" },
+"reason": { "type": "string", "description": "Reason/context for escalation" },
+"notify_user_ids": { "type": "array", "items": { "type": "string" }, "description": "Agent IDs to @notify" },
+"add_tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to add on escalation" }
+},
+"required": [
+"ticket_id",
+"target_group_id",
+"reason"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.satisfaction.list",
+"description": "List CSAT survey results and ratings by ticket, requester, or time window.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"requester_id": { "type": "string", "description": "Filter by requester" },
+"organization_id": { "type": "string", "description": "Filter by organization" },
+"score": { "type": "string", "description": "good or bad" },
+"page": { "type": "integer", "description": "Page number" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.satisfaction.request_survey",
+"description": "Trigger or resend a satisfaction survey for a solved ticket (subject to Zendesk settings).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Solved ticket ID" },
+"channel": { "type": "string", "description": "email or messenger" }
+},
+"required": [
+"ticket_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.explore.export_report",
+"description": "Export Explore (analytics) dashboards or queries for CSAT, SLA, backlog, and response metrics.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"dashboard_id": { "type": "string", "description": "Explore dashboard ID to export" },
+"query_id": { "type": "string", "description": "Explore query ID (alternative to dashboard)" },
+"format": { "type": "string", "description": "Export format (csv, pdf, json)" },
+"filters": { "type": "object", "description": "Key:value filter overrides (e.g., date range, groups)" },
+"email_to": { "type": "array", "items": { "type": "string" }, "description": "Optional list of recipients" }
+},
+"required": [
+"format"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.manage_sla_policies",
+"description": "Create or update SLA policies for response and resolution targets by priority or channel.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"action": { "type": "string", "description": "create, update, delete" },
+"policy_id": { "type": "string", "description": "SLA policy ID (for update/delete)" },
+"name": { "type": "string", "description": "Policy name" },
+"targets": { "type": "object", "description": "Target map (e.g., { first_reply_time: '4h', next_reply_time: '8h' })" },
+"conditions": { "type": "object", "description": "Ticket conditions for the policy" }
+},
+"required": [
+"action"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.triggers.manage",
+"description": "Create, enable/disable, or update triggers for routing, notifications, and tagging automation.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"action": { "type": "string", "description": "create, update, enable, disable, delete" },
+"trigger_id": { "type": "string", "description": "Trigger ID (for update/enable/disable/delete)" },
+"name": { "type": "string", "description": "Trigger name" },
+"conditions": { "type": "object", "description": "All/any conditions definition" },
+"actions": { "type": "array", "items": { "type": "object" }, "description": "List of trigger actions" }
+},
+"required": [
+"action"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.automations.manage",
+"description": "Create or update time-based automations (e.g., pending > 3 days -> reminder).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"action": { "type": "string", "description": "create, update, enable, disable, delete" },
+"automation_id": { "type": "string", "description": "Automation ID for modify operations" },
+"name": { "type": "string", "description": "Automation name" },
+"conditions": { "type": "object", "description": "All/any conditions definition" },
+"actions": { "type": "array", "items": { "type": "object" }, "description": "List of automation actions" }
+},
+"required": [
+"action"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.views.export",
+"description": "Export a view’s results for offline analysis (e.g., backlog by account).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"view_id": { "type": "string", "description": "View ID" },
+"format": { "type": "string", "description": "csv or json" },
+"include_fields": { "type": "array", "items": { "type": "string" }, "description": "Fields to include" }
+},
+"required": [
+"view_id",
+"format"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.talk.call_logs",
+"description": "Retrieve Zendesk Talk call logs for a customer or timeframe to correlate with ticket history.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"caller_number": { "type": "string", "description": "Filter by caller phone" },
+"agent_id": { "type": "string", "description": "Filter by agent" },
+"page": { "type": "integer", "description": "Page number" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.chat.transcripts",
+"description": "Fetch live chat or messaging transcripts for a user, ticket, or timeframe for QBRs and RCA.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Associated ticket ID" },
+"visitor_id": { "type": "string", "description": "Visitor/user ID" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.help_center.search_articles",
+"description": "Search Help Center articles for enablement and self-serve guidance to share with customers.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"query": { "type": "string", "description": "Full-text query" },
+"locale": { "type": "string", "description": "Locale code (e.g., en-us)" },
+"label_names": { "type": "array", "items": { "type": "string" }, "description": "Filter by labels" },
+"section_id": { "type": "string", "description": "Restrict to a section" }
+},
+"required": [
+"query"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.help_center.create_article",
+"description": "Create a Help Center article draft for onboarding guides, FAQs, or playbooks.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"section_id": { "type": "string", "description": "Target section ID" },
+"title": { "type": "string", "description": "Article title" },
+"body": { "type": "string", "description": "HTML or Markdown body" },
+"locale": { "type": "string", "description": "Locale code" },
+"labels": { "type": "array", "items": { "type": "string" }, "description": "Labels to attach" },
+"draft": { "type": "boolean", "description": "Create as draft (true) or publish (false)" }
+},
+"required": [
+"section_id",
+"title",
+"body",
+"locale"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.help_center.update_article",
+"description": "Update or publish an existing Help Center article (e.g., add release notes, fix steps).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"article_id": { "type": "string", "description": "Article ID" },
+"title": { "type": "string", "description": "New title" },
+"body": { "type": "string", "description": "Updated body" },
+"labels": { "type": "array", "items": { "type": "string" }, "description": "Labels to add/replace" },
+"draft": { "type": "boolean", "description": "Set draft state" }
+},
+"required": [
+"article_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.followup.create",
+"description": "Create a follow-up ticket from a closed ticket for proactive checks or action items.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Closed ticket ID" },
+"subject": { "type": "string", "description": "Follow-up subject" },
+"comment": { "type": "string", "description": "Initial public comment" },
+"assignee_id": { "type": "string", "description": "Assignee user ID" },
+"tags": { "type": "array", "items": { "type": "string" }, "description": "Tags to attach" }
+},
+"required": [
+"ticket_id",
+"subject",
+"comment"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.tags.report",
+"description": "Aggregate tag usage across tickets to surface themes (bugs, feature requests, onboarding issues).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"top_n": { "type": "integer", "description": "Limit results to top N tags" },
+"organization_id": { "type": "string", "description": "Filter by org" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.workspace.assign_tickets",
+"description": "Bulk assign tickets to agents or groups based on rules (round-robin, capacity, specialty).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_ids": { "type": "array", "items": { "type": "string" }, "description": "Tickets to assign" },
+"assignee_id": { "type": "string", "description": "Agent user ID" },
+"group_id": { "type": "string", "description": "Group ID" },
+"strategy": { "type": "string", "description": "round_robin, load_balance, manual" }
+},
+"required": [
+"ticket_ids"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.requests.list_for_customer",
+"description": "List all requests created by or for a specific customer to prepare for EBR/QBRs.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"requester_id": { "type": "string", "description": "Requester user ID" },
+"organization_id": { "type": "string", "description": "Filter by organization" },
+"status": { "type": "string", "description": "new, open, pending, on-hold, solved, closed" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"page": { "type": "integer", "description": "Page number" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.sunshine.profiles.get",
+"description": "Retrieve Sunshine custom profiles (accounts, contacts) to enrich the customer 360 view.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"profile_type": { "type": "string", "description": "Type key (e.g., account, contact)" },
+"external_id": { "type": "string", "description": "External system identifier" }
+},
+"required": [
+"profile_type",
+"external_id"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.sunshine.events.list",
+"description": "List Sunshine events (e.g., product usage, billing milestones) for an account timeline.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"profile_id": { "type": "string", "description": "Profile ID to query events for" },
+"event_type": { "type": "string", "description": "Optional event type filter" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"page": { "type": "integer", "description": "Page number" }
+},
+"required": [
+"profile_id"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.ticket_side_conversations.create",
+"description": "Start a side conversation (email/Slack) with internal/external stakeholders from a ticket.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"channel": { "type": "string", "description": "email or slack" },
+"recipients": { "type": "array", "items": { "type": "string" }, "description": "Emails or Slack channel IDs" },
+"subject": { "type": "string", "description": "Subject for side conversation" },
+"message": { "type": "string", "description": "Message body" },
+"private": { "type": "boolean", "description": "Whether to keep transcript internal" }
+},
+"required": [
+"ticket_id",
+"channel",
+"recipients",
+"message"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.ticket_attachments.upload",
+"description": "Upload and attach files (logs, screenshots, QBR decks) to a ticket.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"file_path": { "type": "string", "description": "Path or reference to file" },
+"filename": { "type": "string", "description": "Filename override" },
+"content_type": { "type": "string", "description": "MIME type" }
+},
+"required": [
+"ticket_id",
+"file_path"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.nps.send_survey",
+"description": "Send an NPS survey to a list of users or an organization and track responses.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"recipient_user_ids": { "type": "array", "items": { "type": "string" }, "description": "Users to survey" },
+"organization_id": { "type": "string", "description": "Optional org to survey" },
+"campaign_id": { "type": "string", "description": "NPS campaign identifier" },
+"channel": { "type": "string", "description": "email, messenger" },
+"language": { "type": "string", "description": "Locale for the survey" }
+},
+"required": [
+"campaign_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.nps.results",
+"description": "Retrieve NPS results and breakdown (promoters, passives, detractors) over time.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"campaign_id": { "type": "string", "description": "Campaign identifier" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"organization_id": { "type": "string", "description": "Filter by org" }
+}
+},
+"type": "read"
+},
+{
+"name": "zendesk.ticket_fields.manage",
+"description": "Create or update custom ticket fields used for success plans, churn risk, or onboarding stage.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"action": { "type": "string", "description": "create, update, delete" },
+"field_id": { "type": "string", "description": "Field ID (for update/delete)" },
+"type": { "type": "string", "description": "text, textarea, checkbox, dropdown, date, decimal, integer" },
+"title": { "type": "string", "description": "Field display name" },
+"key": { "type": "string", "description": "Programmatic key" },
+"options": { "type": "array", "items": { "type": "object" }, "description": "Dropdown options if relevant" },
+"required_on_statuses": { "type": "array", "items": { "type": "string" }, "description": "Statuses where field is required" }
+},
+"required": [
+"action"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.ticket_merge",
+"description": "Merge duplicate tickets (e.g., multiple emails from same user) while preserving comments and attachments.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"primary_ticket_id": { "type": "string", "description": "Ticket to keep" },
+"secondary_ticket_ids": { "type": "array", "items": { "type": "string" }, "description": "Tickets to merge into primary" },
+"comment": { "type": "string", "description": "Optional merge note" }
+},
+"required": [
+"primary_ticket_id",
+"secondary_ticket_ids"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.subscriptions.ticket_updates",
+"description": "Subscribe to ticket updates that match a filter and stream changes for real-time account monitoring.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"filter_query": { "type": "string", "description": "Search syntax defining which tickets to watch" },
+"events": { "type": "array", "items": { "type": "string" }, "description": "created, updated, solved, satisfaction_changed" },
+"callback_url": { "type": "string", "description": "Webhook endpoint to receive updates" }
+},
+"required": [
+"filter_query",
+"callback_url"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.side_load_customer_timeline",
+"description": "Compile a customer timeline (tickets, calls, chats, Sunshine events) for QBR/EBR packets.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"organization_id": { "type": "string", "description": "Organization to compile" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"include_channels": { "type": "array", "items": { "type": "string" }, "description": "tickets, talk, chat, sunshine" }
+},
+"required": [
+"organization_id"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.integrations.link_ticket",
+"description": "Link a Zendesk ticket to external systems (e.g., Jira issue, Salesforce case) and sync metadata.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Zendesk ticket ID" },
+"external_system": { "type": "string", "description": "jira, salesforce, linear, github" },
+"external_id": { "type": "string", "description": "External record ID" },
+"sync_fields": { "type": "object", "description": "Field map for synchronization" }
+},
+"required": [
+"ticket_id",
+"external_system",
+"external_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.schedule_qbr_report",
+"description": "Generate and schedule a QBR/EBR packet using Zendesk Explore and Help Center content for a given account.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"organization_id": { "type": "string", "description": "Account to report on" },
+"date_range": { "type": "object", "description": "Time window for metrics and activity" },
+"include_sections": { "type": "array", "items": { "type": "string" }, "description": "tickets, csat, nps, sla, themes, changelog" },
+"delivery": { "type": "object", "description": "Schedule and recipients (cron or RRULE, emails)" },
+"format": { "type": "string", "description": "pdf or pptx" }
+},
+"required": [
+"organization_id",
+"date_range"
+]
+},
+"type": "read"
+},
+{
+"name": "zendesk.requests.create_onboarding",
+"description": "Create a structured onboarding request set (tickets + tasks) for a new customer with templates.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"organization_id": { "type": "string", "description": "Customer organization ID" },
+"owner_id": { "type": "string", "description": "CSM owner user ID" },
+"template_id": { "type": "string", "description": "Onboarding template to use" },
+"due_date": { "type": "string", "description": "Overall due date (ISO8601)" },
+"custom_fields": { "type": "object", "description": "Additional field overrides" }
+},
+"required": [
+"organization_id",
+"owner_id",
+"template_id"
+]
+},
+"type": "write"
+},
+{
+"name": "zendesk.audit_logs.search",
+"description": "Search admin audit logs for configuration changes affecting workflows or SLAs.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"actor_id": { "type": "string", "description": "Filter by actor (admin/agent) ID" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"event_type": { "type": "string", "description": "Field or object changed" },
+"page": { "type": "integer", "description": "Page number" }
+}
+},
+"type": "read"
+}
+    ],
+    "hubspot": [
+        {
+"name": "hubspot.contacts.search",
+"description": "Search contacts by email, name, lifecycle stage, owner, domain, or custom properties.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"filters": {
+"type": "array",
+"description": "List of filter objects (property, operator, value)",
+"items": { "type": "object" }
+},
+"query": { "type": "string", "description": "Free-text query across contact fields" },
+"properties": {
+"type": "array",
+"items": { "type": "string" },
+"description": "Specific properties to return"
+},
+"limit": { "type": "integer", "description": "Max records to return" },
+"after": { "type": "string", "description": "Pagination cursor" },
+"sorts": {
+"type": "array",
+"items": { "type": "string" },
+"description": "List of sort keys, e.g., -lastmodifieddate"
+}
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.contacts.get",
+"description": "Get a single contact by ID or email with selected properties.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"contact_id": { "type": "string", "description": "Contact ID" },
+"email": { "type": "string", "description": "Contact email (alternative to contact_id)" },
+"properties": { "type": "array", "items": { "type": "string" }, "description": "Properties to include" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.contacts.create_or_update",
+"description": "Create or update a contact (upsert by email) including custom properties and owner assignment.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"email": { "type": "string", "description": "Primary email (used for upsert)" },
+"properties": { "type": "object", "description": "Key:value map of contact properties" },
+"owner_id": { "type": "string", "description": "HubSpot owner ID" }
+},
+"required": ["email"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.contacts.merge",
+"description": "Merge a secondary contact into a primary contact, preserving history and associations.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"primary_contact_id": { "type": "string", "description": "ID of the contact to keep" },
+"secondary_contact_id": { "type": "string", "description": "ID of the contact to merge into primary" }
+},
+"required": ["primary_contact_id", "secondary_contact_id"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.companies.search",
+"description": "Search companies by name, domain, owner, lifecycle stage, ARR, or custom properties.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"filters": { "type": "array", "items": { "type": "object" }, "description": "Filter objects" },
+"query": { "type": "string", "description": "Free-text query" },
+"properties": { "type": "array", "items": { "type": "string" }, "description": "Properties to return" },
+"limit": { "type": "integer", "description": "Max records" },
+"after": { "type": "string", "description": "Pagination cursor" },
+"sorts": { "type": "array", "items": { "type": "string" }, "description": "Sort keys" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.companies.create_or_update",
+"description": "Create or update a company (upsert by domain) and set CSM-related properties (e.g., tier, risk).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"domain": { "type": "string", "description": "Company domain (used for upsert)" },
+"properties": { "type": "object", "description": "Key:value map of company properties" },
+"owner_id": { "type": "string", "description": "HubSpot owner ID" }
+},
+"required": ["domain"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.associations.link",
+"description": "Create or update associations between records (e.g., contact↔company, ticket↔company).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"from_object_type": { "type": "string", "description": "contacts, companies, deals, tickets, custom_object" },
+"from_object_id": { "type": "string", "description": "Source object ID" },
+"to_object_type": { "type": "string", "description": "contacts, companies, deals, tickets, custom_object" },
+"to_object_id": { "type": "string", "description": "Target object ID" },
+"association_type": { "type": "string", "description": "Association label/type where applicable" }
+},
+"required": ["from_object_type", "from_object_id", "to_object_type", "to_object_id"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.deals.search",
+"description": "Search deals by pipeline, stage, amount, renewal date, or company.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"filters": { "type": "array", "items": { "type": "object" }, "description": "Filter objects" },
+"properties": { "type": "array", "items": { "type": "string" }, "description": "Deal properties to return" },
+"limit": { "type": "integer", "description": "Max records" },
+"after": { "type": "string", "description": "Pagination cursor" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.deals.create_or_update",
+"description": "Create or update a deal (e.g., renewal or expansion) and associate to company/contacts.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"properties": { "type": "object", "description": "Deal properties (amount, pipeline, stage, close date)" },
+"associations": { "type": "object", "description": "Associations to company/contact IDs" }
+},
+"required": ["properties"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.tickets.search",
+"description": "Search Service Hub tickets by status, pipeline, SLA, priority, or customer.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"filters": { "type": "array", "items": { "type": "object" }, "description": "Filter objects" },
+"properties": { "type": "array", "items": { "type": "string" }, "description": "Ticket properties to return" },
+"limit": { "type": "integer", "description": "Max records" },
+"after": { "type": "string", "description": "Pagination cursor" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.tickets.create_or_update",
+"description": "Create or update a ticket and associate it with company, contact, and deal where relevant.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"properties": { "type": "object", "description": "Ticket properties (status, priority, pipeline, subject, content)" },
+"associations": { "type": "object", "description": "Associations to company/contact/deal IDs" }
+},
+"required": ["properties"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.tasks.create",
+"description": "Create tasks for follow-ups, onboarding steps, or renewal prep and assign to owners with due dates.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"title": { "type": "string", "description": "Task title" },
+"notes": { "type": "string", "description": "Task details" },
+"due_date": { "type": "string", "description": "ISO8601 due date/time" },
+"owner_id": { "type": "string", "description": "HubSpot owner ID" },
+"associations": { "type": "object", "description": "Associated record IDs (contact, company, deal, ticket)" },
+"priority": { "type": "string", "description": "low, medium, high" }
+},
+"required": ["title"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.engagements.log_note",
+"description": "Log a note on a contact, company, deal, or ticket (e.g., meeting summary, risk update).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"body": { "type": "string", "description": "Note content (plain text or markdown)" },
+"associations": { "type": "object", "description": "Record IDs to associate (contact/company/deal/ticket)" },
+"timestamp": { "type": "string", "description": "ISO8601 event time (optional)" }
+},
+"required": ["body", "associations"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.meetings.create_engagement",
+"description": "Create a past or scheduled meeting engagement with attendees and outcomes.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"title": { "type": "string", "description": "Meeting title" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"attendee_emails": { "type": "array", "items": { "type": "string" }, "description": "Attendee emails" },
+"outcome": { "type": "string", "description": "Scheduled, Completed, No show, etc." },
+"associations": { "type": "object", "description": "Associated record IDs" },
+"notes": { "type": "string", "description": "Meeting notes" }
+},
+"required": ["title", "start_time", "end_time"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.properties.get",
+"description": "Get property definitions for a given object type (contacts, companies, deals, tickets, custom).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_type": { "type": "string", "description": "contacts, companies, deals, tickets, custom_object" }
+},
+"required": ["object_type"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.properties.manage",
+"description": "Create, update, or archive a property on a standard or custom object.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"action": { "type": "string", "description": "create, update, archive" },
+"object_type": { "type": "string", "description": "contacts, companies, deals, tickets, custom_object" },
+"property_name": { "type": "string", "description": "Internal name (for update/archive)" },
+"definition": { "type": "object", "description": "Property schema (label, type, fieldType, options)" }
+},
+"required": ["action", "object_type"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.workflows.enroll",
+"description": "Enroll records into a HubSpot workflow (e.g., onboarding, renewal nurture, escalation alerts).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"workflow_id": { "type": "string", "description": "Workflow ID" },
+"object_type": { "type": "string", "description": "contacts, companies, deals, tickets" },
+"record_ids": { "type": "array", "items": { "type": "string" }, "description": "IDs to enroll" }
+},
+"required": ["workflow_id", "object_type", "record_ids"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.workflows.manage",
+"description": "Enable/disable a workflow and update enrollment triggers or actions.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"workflow_id": { "type": "string", "description": "Workflow ID" },
+"action": { "type": "string", "description": "enable, disable, update" },
+"updates": { "type": "object", "description": "Workflow configuration updates" }
+},
+"required": ["workflow_id", "action"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.lists.search_static",
+"description": "Find or create static lists for outreach cohorts (e.g., VIP customers, at-risk accounts).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"query": { "type": "string", "description": "Search by list name" },
+"create_if_missing": { "type": "boolean", "description": "Create list if not found" },
+"list_name": { "type": "string", "description": "Name for new list" }
+}
+},
+"type": "write"
+},
+{
+"name": "hubspot.lists.add_records",
+"description": "Add records (contacts/companies) to a static list by IDs or emails/domains.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"list_id": { "type": "string", "description": "Static list ID" },
+"object_type": { "type": "string", "description": "contacts or companies" },
+"ids": { "type": "array", "items": { "type": "string" }, "description": "Record IDs" },
+"identifiers": { "type": "array", "items": { "type": "string" }, "description": "Emails or domains" }
+},
+"required": ["list_id", "object_type"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.sequences.enroll_contacts",
+"description": "Enroll contacts into a sales/service sequence for onboarding nudges or renewal reminders.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"sequence_id": { "type": "string", "description": "Sequence ID" },
+"contact_ids": { "type": "array", "items": { "type": "string" }, "description": "Contact IDs to enroll" },
+"owner_id": { "type": "string", "description": "Sequence sender/owner" },
+"send_immediately": { "type": "boolean", "description": "Start right away if true" }
+},
+"required": ["sequence_id", "contact_ids"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.feedback_surveys.send",
+"description": "Send CSAT/NPS/CES feedback surveys and associate responses to contacts/companies.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"survey_id": { "type": "string", "description": "Feedback survey ID" },
+"contact_ids": { "type": "array", "items": { "type": "string" }, "description": "Recipients" },
+"channel": { "type": "string", "description": "email, web" },
+"locale": { "type": "string", "description": "Locale code (e.g., en)" }
+},
+"required": ["survey_id", "contact_ids"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.feedback_surveys.results",
+"description": "Retrieve survey results and time-series breakdown for CSAT/NPS/CES.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"survey_id": { "type": "string", "description": "Survey ID" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"aggregate": { "type": "boolean", "description": "Return aggregates only if true" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.playbooks.log_call_note",
+"description": "Open a playbook and log structured notes to a record (contact/company/deal/ticket).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"playbook_id": { "type": "string", "description": "Playbook ID" },
+"associations": { "type": "object", "description": "Record associations" },
+"responses": { "type": "object", "description": "Captured answers/fields" }
+},
+"required": ["playbook_id", "associations"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.quotes.create",
+"description": "Create a quote for renewal or expansion and associate to deals/companies/contacts.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"deal_id": { "type": "string", "description": "Associated deal ID" },
+"line_items": { "type": "array", "items": { "type": "object" }, "description": "Product line items" },
+"valid_until": { "type": "string", "description": "ISO8601 expiration" },
+"properties": { "type": "object", "description": "Quote properties" }
+},
+"required": ["deal_id", "line_items"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.products.list",
+"description": "List products and price book entries for packaging renewals or expansions.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"query": { "type": "string", "description": "Search by name/SKU" },
+"limit": { "type": "integer", "description": "Max results" },
+"after": { "type": "string", "description": "Pagination cursor" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.line_items.add_to_deal",
+"description": "Attach product line items to a deal (quantity, term, discounts).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"deal_id": { "type": "string", "description": "Deal ID" },
+"line_items": { "type": "array", "items": { "type": "object" }, "description": "List of line item specs" }
+},
+"required": ["deal_id", "line_items"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.pipelines.stages.update",
+"description": "Update a pipeline stage (e.g., Deal or Ticket stages) and stage order.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_type": { "type": "string", "description": "deals or tickets" },
+"pipeline_id": { "type": "string", "description": "Pipeline ID" },
+"stage_id": { "type": "string", "description": "Stage ID" },
+"updates": { "type": "object", "description": "Label, probability, displayOrder, metadata" }
+},
+"required": ["object_type", "pipeline_id", "stage_id", "updates"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.reports.export",
+"description": "Export a HubSpot report or dashboard to CSV/PDF with optional filters for QBR packs.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"dashboard_id": { "type": "string", "description": "Dashboard ID" },
+"report_id": { "type": "string", "description": "Report ID (alternative to dashboard)" },
+"format": { "type": "string", "description": "csv or pdf" },
+"filters": { "type": "object", "description": "Date range, owners, pipelines, etc." },
+"email_to": { "type": "array", "items": { "type": "string" }, "description": "Recipients for emailed export" }
+},
+"required": ["format"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.timeline.events.list",
+"description": "List recent activities across objects (emails, calls, meetings, notes) for an account timeline.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"company_id": { "type": "string", "description": "Company ID to anchor the timeline" },
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"limit": { "type": "integer", "description": "Max events to return" }
+},
+"required": ["company_id"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.subscription_preferences.update",
+"description": "Update a contact’s email subscription preferences (e.g., service updates, renewal reminders).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"contact_id": { "type": "string", "description": "Contact ID" },
+"subscriptions": { "type": "array", "items": { "type": "object" }, "description": "List of subscription updates" }
+},
+"required": ["contact_id", "subscriptions"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.tickets.sla_breaches.report",
+"description": "Report on SLA breaches and at-risk tickets by pipeline, owner, or company.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"start_time": { "type": "string", "description": "ISO8601 start" },
+"end_time": { "type": "string", "description": "ISO8601 end" },
+"owner_id": { "type": "string", "description": "Filter by owner ID" },
+"company_id": { "type": "string", "description": "Filter by company ID" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.custom_objects.search",
+"description": "Search custom objects (e.g., subscriptions, projects, usage) tied to CSM workflows.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_type": { "type": "string", "description": "Fully qualified name of custom object" },
+"filters": { "type": "array", "items": { "type": "object" }, "description": "Filter objects" },
+"properties": { "type": "array", "items": { "type": "string" }, "description": "Properties to return" },
+"limit": { "type": "integer", "description": "Max records" }
+},
+"required": ["object_type"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.custom_objects.create_or_update",
+"description": "Create or update a custom object record (e.g., Success Plan, Subscription) and manage associations.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_type": { "type": "string", "description": "Custom object type" },
+"properties": { "type": "object", "description": "Property map" },
+"associations": { "type": "object", "description": "Associations to standard/custom objects" },
+"id": { "type": "string", "description": "Existing record ID for update" }
+},
+"required": ["object_type", "properties"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.integrations.salesforce.sync_status",
+"description": "Check Salesforce↔HubSpot sync health for a record or object type (helpful for data parity before QBRs).",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_type": { "type": "string", "description": "contacts, companies, deals" },
+"record_id": { "type": "string", "description": "Optional specific record ID" }
+},
+"required": ["object_type"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.emails.send_template",
+"description": "Send a templated email from a connected inbox to contacts with personalization tokens.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"template_id": { "type": "string", "description": "Email template ID" },
+"from_owner_id": { "type": "string", "description": "HubSpot owner/sender ID" },
+"to_contact_ids": { "type": "array", "items": { "type": "string" }, "description": "Recipient contact IDs" },
+"cc": { "type": "array", "items": { "type": "string" }, "description": "CC emails" },
+"bcc": { "type": "array", "items": { "type": "string" }, "description": "BCC emails" },
+"personalization": { "type": "object", "description": "Token values to merge" },
+"attachments": { "type": "array", "items": { "type": "object" }, "description": "Files to attach" }
+},
+"required": ["template_id", "to_contact_ids"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.owners.list",
+"description": "List HubSpot owners (users) for assignment, territory routing, and reporting.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"include_inactive": { "type": "boolean", "description": "Include deactivated owners" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.deals.renewal_forecast",
+"description": "Generate a renewal/expansion forecast from deals by close date, stage, and probability.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"start_date": { "type": "string", "description": "ISO8601 start" },
+"end_date": { "type": "string", "description": "ISO8601 end" },
+"pipelines": { "type": "array", "items": { "type": "string" }, "description": "Deal pipeline IDs" },
+"include_expansion": { "type": "boolean", "description": "Include upsell/cross-sell" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.tickets.bulk_update",
+"description": "Bulk update ticket properties (status, priority, owner) for backlog grooming and triage.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_ids": { "type": "array", "items": { "type": "string" }, "description": "Ticket IDs" },
+"properties": { "type": "object", "description": "Properties to set" }
+},
+"required": ["ticket_ids", "properties"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.webhooks.subscribe",
+"description": "Subscribe a webhook to record changes (tickets, deals, contacts) to power real-time alerts.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_types": { "type": "array", "items": { "type": "string" }, "description": "Objects to watch" },
+"events": { "type": "array", "items": { "type": "string" }, "description": "PropertyChange, Creation, Deletion" },
+"callback_url": { "type": "string", "description": "Target webhook endpoint" },
+"secret": { "type": "string", "description": "Optional signing secret" }
+},
+"required": ["object_types", "events", "callback_url"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.imports.bulk_upsert",
+"description": "Import CSV data to upsert contacts/companies/deals/tickets with property mappings.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"object_type": { "type": "string", "description": "contacts, companies, deals, tickets" },
+"file_path": { "type": "string", "description": "Path to CSV file" },
+"mappings": { "type": "object", "description": "CSV column → property name" },
+"unique_property": { "type": "string", "description": "Unique key for upsert (e.g., email, domain)" },
+"associations": { "type": "object", "description": "Optional association rules" }
+},
+"required": ["object_type", "file_path", "mappings"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.ticket_snippets.apply",
+"description": "Insert a saved snippet into a ticket reply for standardized responses.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"snippet_id": { "type": "string", "description": "Snippet ID" },
+"placeholders": { "type": "object", "description": "Optional placeholder variables" }
+},
+"required": ["ticket_id", "snippet_id"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.kb.search_articles",
+"description": "Search Knowledge Base articles to share with customers for faster resolution.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"query": { "type": "string", "description": "Full-text search" },
+"category_id": { "type": "string", "description": "Filter by category" },
+"language": { "type": "string", "description": "Language code" },
+"limit": { "type": "integer", "description": "Max results" }
+},
+"required": ["query"]
+},
+"type": "read"
+},
+{
+"name": "hubspot.success_plans.generate",
+"description": "Create or refresh a Success Plan custom object with goals, milestones, owners, and risks.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"company_id": { "type": "string", "description": "Company to attach the plan" },
+"goals": { "type": "array", "items": { "type": "object" }, "description": "List of goal objects" },
+"milestones": { "type": "array", "items": { "type": "object" }, "description": "Key milestones and due dates" },
+"risks": { "type": "array", "items": { "type": "object" }, "description": "Known risks with owners/mitigations" }
+},
+"required": ["company_id"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.renewals.watchlist.build",
+"description": "Compile a watchlist of renewals and risk signals (usage drop, low CSAT, no activity) across accounts.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"start_date": { "type": "string", "description": "ISO8601 start for renewal window" },
+"end_date": { "type": "string", "description": "ISO8601 end for renewal window" },
+"include_risk_signals": { "type": "boolean", "description": "If true, include heuristic risk scoring" },
+"pipelines": { "type": "array", "items": { "type": "string" }, "description": "Deal pipelines to include" }
+}
+},
+"type": "read"
+},
+{
+"name": "hubspot.user_events.usage_ingest",
+"description": "Upsert product usage or events (by contact or company) into a custom timeline or object.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"entity": { "type": "string", "description": "contact or company" },
+"entity_id": { "type": "string", "description": "HubSpot ID of entity" },
+"events": { "type": "array", "items": { "type": "object" }, "description": "List of usage events" },
+"schema": { "type": "object", "description": "Event schema if dynamic" }
+},
+"required": ["entity", "entity_id", "events"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.files.upload",
+"description": "Upload files (QBR decks, proposals, guides) and associate to records.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"file_path": { "type": "string", "description": "Local path to file" },
+"folder_path": { "type": "string", "description": "Destination folder path in HubSpot Files" },
+"associations": { "type": "object", "description": "Record associations" },
+"access": { "type": "string", "description": "PUBLIC_INDEXABLE, PUBLIC_NOT_INDEXABLE, PRIVATE" }
+},
+"required": ["file_path"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.tickets.side_conversations.create",
+"description": "Start a side conversation (email/Slack) from a ticket and keep transcript in HubSpot.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"ticket_id": { "type": "string", "description": "Ticket ID" },
+"channel": { "type": "string", "description": "email or slack" },
+"recipients": { "type": "array", "items": { "type": "string" }, "description": "Emails or Slack channel IDs" },
+"subject": { "type": "string", "description": "Subject line" },
+"message": { "type": "string", "description": "Message body" },
+"private": { "type": "boolean", "description": "Keep internal if true" }
+},
+"required": ["ticket_id", "channel", "recipients", "message"]
+},
+"type": "write"
+},
+{
+"name": "hubspot.alerts.create_risk_alert",
+"description": "Create a risk alert (internal task/email) when churn signals are detected for a company.",
+"inputSchema": {
+"type": "object",
+"properties": {
+"company_id": { "type": "string", "description": "Company ID" },
+"signals": { "type": "array", "items": { "type": "string" }, "description": "Signals (low usage, tickets spiking, unpaid invoice)" },
+"notify_owner": { "type": "boolean", "description": "Notify company owner" },
+"additional_recipients": { "type": "array", "items": { "type": "string" }, "description": "Extra emails to notify" }
+},
+"required": ["company_id", "signals"]
+},
+"type": "write"
+}
+]
 }
