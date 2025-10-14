@@ -1,47 +1,77 @@
-# Dynamic Tool Selection by Redis
+# Redis MCP Tool Filtering Demo
 
-Model Context Protocol (MCP) tool selection using Redis vector search.
+## Overview
 
-## Background
+Customer Support Engineers handle incidents across multiple tools: Zendesk tickets, Datadog alerts, Confluence runbooks, etc. When automating this with MCP agents, you can access 170+ tools across these services. But sending all tool schemas in every request causes inaccurate tool selection, high token costs, and slow responses. This demo uses Redis vector search to pre-filter tools before the LLM sees them, finding the 2-3 most relevant tools. This reduces context size by 98% while providing accurate semantic search, significantly lower token costs, and real-time performance.
 
-MCP servers expose numerous tools to LLM applications, creating a context scaling challenge. As tool inventories grow , sending all tools to the LLM for every request becomes inefficient: increasing latency, token consumption, and costs. 
+**What this demo does:** Run a web interface where you can submit customer support queries (e.g., "check service health for checkout API"). The demo compares two approaches side-by-side: sending all 170+ tools to the LLM (baseline) vs. using Redis to filter to the top 2-3 relevant tools first (optimized). You'll see the difference in response time, token usage, and tool selection accuracy. 
 
-This demo implements a two-stage optimization: Redis vector search pre-filters tools based on semantic similarity to the query, reducing the LLM's context from 170+ tools to 2-3 relevant ones. Combined with semantic caching for repeated queries, which achieves latency reduction while maintaining selection accuracy.
+## Prerequisites
 
-## Architecture
-
-### Core Components
-
-- **FastAPI Backend** (`app.py`): Main application server handling API requests and orchestrating tool selection
-- **Vector Search Index**: Redis HNSW index for semantic similarity search across MCP tools
-- **Semantic Cache**: TTL-based cache for similar query responses
-- **Embedding Service**: SentenceTransformers for generating 384-dimensional embeddings
-- **LLM Integration**: OpenAI GPT-4 for final tool selection from pre-filtered candidates
+- Python 3.10-3.13 (recommended)
+  - 3.9 and below: Not supported (transformers requires 3.10+)
+  - 3.14+: May have dependency issues (numpy/torch wheels)
+- Redis instance 
+- OpenAI API key
 
 ## Installation
 
-### Configuration
+### 1. Verify Python Version
 
-1. Copy the example configuration file:
+```bash
+python3 --version  # Should be 3.10-3.13
+```
+
+Or use the check script:
+```bash
+./check_python.sh
+```
+
+### 2. Configure
+
 ```bash
 cp config.py.example config.py
 ```
 
-2. Edit `config.py` and replace all instances of `"STUB_VALUE"` with your actual credentials:
-   - Redis URL, host, port, and password
-   - OpenAI API key
+Edit `config.py` and fill in 3 values at the top:
 
-### Start
+```python
+# 1. Redis endpoint from Redis Cloud dashboard
+_redis_endpoint = "redis-12345.c62.us-east-1-4.ec2.redns.redis-cloud.com:12345"
+
+# 2. Redis password
+_redis_password = "your-password-here"
+
+# 3. OpenAI API key
+_openai_api_key = "sk-proj-your-key-here"
+```
+
+Everything else is configured automatically.
+
+### 3. First Time Setup
 
 ```bash
 ./setup.sh
 ```
 
-### Tool Selection Pipeline
+This installs all dependencies and starts the server (5-10 minutes, ~500MB download).
 
-1. **Query Embedding**: Generate vector representation of user query
-2. **Vector Search**: Find top-k similar tools using Redis VSS (8ms average)
-3. **LLM Refinement**: Send pre-filtered tools to GPT-4 for final selection
-4. **Response Caching**: Store query request responses with embedding for future similarity matching
+```
+http://localhost:3001
+```
 
+### 3. Subsequent Runs
 
+After initial setup, start the server everytime with:
+
+```bash
+./run.sh
+```
+
+## Troubleshooting
+
+**Python version errors:** Use Python 3.10-3.13 from https://python.org/
+
+**Permission denied:** `chmod +x setup.sh run.sh`
+
+**ModuleNotFoundError:** Run `./run.sh` or activate venv: `source venv/bin/activate`

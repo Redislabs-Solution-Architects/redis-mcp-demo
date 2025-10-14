@@ -1,24 +1,72 @@
 """
-Configuration for Redis MCP Latency Reduction Demo
+Configuration file for Redis & OpenAI setup
+
+SETUP INSTRUCTIONS:
+1. Replace STUB_VALUE below with your actual credentials
+2. Save this file
+3. Run ./setup.sh
 """
 import os
 
-# Redis Cloud Configuration (from existing demo config)
+# =============================================================================
+# REDIS CONFIGURATION - Fill in your Redis Cloud credentials below
+# =============================================================================
+# Get these from your Redis Cloud dashboard:
+# 1. Public endpoint (looks like: redis-12345.c62.us-east-1-4.ec2.redns.redis-cloud.com:12345)
+# 2. Default user password
+
+_redis_endpoint = "STUB_VALUE"  # Replace with: redis-12345.c62.us-east-1-4.ec2.redns.redis-cloud.com:12345
+_redis_password = "STUB_VALUE"  # Replace with your Redis password
+_redis_username = "default"     # Usually leave as "default"
+
+
+# =============================================================================
+# OPENAI CONFIGURATION - Fill in your OpenAI API key below
+# =============================================================================
+# Get your API key from: https://platform.openai.com/api-keys
+
+_openai_api_key = "STUB_VALUE"  # Replace with: sk-proj-...
+
+
+# =============================================================================
+# ADVANCED: Override with environment variables (optional)
+# =============================================================================
+_redis_endpoint = os.getenv("REDIS_ENDPOINT", _redis_endpoint)
+_redis_password = os.getenv("REDIS_PASSWORD", _redis_password)
+_redis_username = os.getenv("REDIS_USERNAME", _redis_username)
+_openai_api_key = os.getenv("OPENAI_API_KEY", _openai_api_key)
+
+
+# =============================================================================
+# DO NOT EDIT BELOW THIS LINE (automatic configuration)
+# =============================================================================
+
+# Parse Redis endpoint
+if _redis_endpoint != "STUB_VALUE" and ":" in _redis_endpoint:
+    _redis_host, _redis_port = _redis_endpoint.rsplit(":", 1)
+    _redis_port = int(_redis_port)
+    _redis_url = f"redis://{_redis_username}:{_redis_password}@{_redis_endpoint}"
+else:
+    _redis_host = _redis_endpoint
+    _redis_port = 6379
+    _redis_url = "STUB_VALUE"
+
 REDIS_CONFIG = {
-    "url": os.getenv("REDIS_URL", "STUB_VALUE"),
-    "host": os.getenv("REDIS_HOST", "STUB_VALUE"),
-    "port": int(os.getenv("REDIS_PORT", "STUB_VALUE")),
-    "username": os.getenv("REDIS_USERNAME", "default"),
-    "password": os.getenv("REDIS_PWD", "STUB_VALUE"),
+    "endpoint": _redis_endpoint,
+    "host": _redis_host,
+    "port": _redis_port,
+    "username": _redis_username,
+    "password": _redis_password,
+    "url": _redis_url,
 }
 
-# OpenAI Configuration for real LLM calls
 OPENAI_CONFIG = {
-    "api_key": os.getenv("OPENAI_API_KEY", "STUB_VALUE"),
-    "model": os.getenv("OPENAI_MODEL", "gpt-4o"),
-    "max_tokens": int(os.getenv("OPENAI_MAX_TOKENS", "1000")),
-    "temperature": float(os.getenv("OPENAI_TEMPERATURE", "0.1")),
+    "api_key": _openai_api_key,
+    "model": os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+    "max_tokens": int(os.getenv("OPENAI_MAX_TOKENS", "5000")),
+    "temperature": float(os.getenv("OPENAI_TEMPERATURE", "0.4")),
 }
+
 
 # Demo Configuration
 DEMO_CONFIG = {
@@ -30,7 +78,7 @@ DEMO_CONFIG = {
 
 # Performance Settings
 PERFORMANCE_CONFIG = {
-    "cache_ttl": int(os.getenv("REDIS_CACHE_TTL", "300")),  # 5 minutes
+    "cache_ttl": int(os.getenv("REDIS_CACHE_TTL", "300")),
     "vector_dim": int(os.getenv("REDIS_VECTOR_DIM", "384")),  #  match sentence-transformers all-MiniLM-L6-v2
     "similarity_threshold": float(os.getenv("SIMILARITY_THRESHOLD", "0.2")),
     "cache_similarity_threshold": float(os.getenv("CACHE_SIMILARITY_THRESHOLD", "0.70")),
