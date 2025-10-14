@@ -6,7 +6,7 @@ Customer Support Engineers handle incidents across multiple tools: Zendesk ticke
 
 **What this demo does:** Run a web interface where you can submit customer support queries (e.g., "Create a high priority incident regarding a payment service outage"). The demo compares two approaches side-by-side: sending all 170+ tools to the LLM (baseline) vs. using Redis to filter to the top 2-3 relevant tools first (optimized). You'll see the difference in response time, token usage, and tool selection accuracy.
 
-![Application UI Example](application_ui_example.png)
+![Application UI Example](static/application_ui_example.png)
 *Side-by-side comparison showing token usage, cost, and response time differences between unfiltered and Redis-optimized approaches* 
 
 ## Prerequisites
