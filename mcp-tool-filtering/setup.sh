@@ -75,16 +75,19 @@ print_success "Python $PYTHON_VERSION found"
 
 # Check if config.py exists, if not create it from example
 if [ ! -f "config.py" ]; then
-    print_warning "config.py not found"
+    print_error "config.py not found"
     if [ -f "config.py.example" ]; then
         print_info "Creating config.py from template"
         cp config.py.example config.py
-        print_warning "Edit config.py and replace STUB_VALUE entries:"
+        echo ""
+        print_warning "You must edit config.py and replace STUB_VALUE entries:"
         echo "  - _redis_endpoint: your Redis Cloud endpoint"
         echo "  - _redis_password: your Redis password"
         echo "  - OPENAI api_key: your OpenAI API key"
         echo ""
-        read -p "Press Enter after updating config.py (Ctrl+C to exit)..."
+        print_error "Setup cannot continue with STUB_VALUE placeholders"
+        echo "After updating config.py, run ./setup.sh again"
+        exit 1
     else
         print_error "config.py.example not found"
         exit 1
@@ -92,6 +95,21 @@ if [ ! -f "config.py" ]; then
 fi
 
 print_success "Configuration file found"
+
+# Validate config.py doesn't contain STUB_VALUE
+print_info "Validating configuration..."
+if grep -q "STUB_VALUE" config.py; then
+    print_error "config.py still contains STUB_VALUE placeholders"
+    echo ""
+    echo "Please edit config.py and replace all STUB_VALUE entries:"
+    echo "  - _redis_endpoint: your Redis Cloud endpoint"
+    echo "  - _redis_password: your Redis password"
+    echo "  - OPENAI api_key: your OpenAI API key"
+    echo ""
+    echo "After updating config.py, run ./setup.sh again"
+    exit 1
+fi
+print_success "Configuration validated"
 
 # Create virtual environment if it doesn't exist
 VENV_DIR="venv"

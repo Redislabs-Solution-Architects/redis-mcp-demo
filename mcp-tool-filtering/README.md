@@ -22,11 +22,6 @@ Customer Support Engineers handle incidents across multiple tools: Zendesk ticke
 python3 --version  # Should be 3.10-3.13
 ```
 
-Or use the check script:
-```bash
-./check_python.sh
-```
-
 ### 2. Configure
 
 ```bash
