@@ -1,10 +1,10 @@
 """
-Configuration file for Redis & OpenAI setup
+This file contains your actual credentials.
 
 SETUP INSTRUCTIONS:
-1. Replace STUB_VALUE below with your actual credentials
-2. Save this file
-3. Run ./setup.sh
+1. Copy this file to config.py
+1. Replace placeholder values below with your actual credentials
+2. Run ./setup.sh
 """
 import os
 
@@ -42,14 +42,14 @@ _openai_api_key = os.getenv("OPENAI_API_KEY", _openai_api_key)
 # =============================================================================
 
 # Parse Redis endpoint
-if _redis_endpoint != "STUB_VALUE" and ":" in _redis_endpoint:
+if _redis_endpoint and ":" in _redis_endpoint:
     _redis_host, _redis_port = _redis_endpoint.rsplit(":", 1)
     _redis_port = int(_redis_port)
     _redis_url = f"redis://{_redis_username}:{_redis_password}@{_redis_endpoint}"
 else:
-    _redis_host = _redis_endpoint
+    _redis_host = _redis_endpoint if _redis_endpoint else "localhost"
     _redis_port = 6379
-    _redis_url = "STUB_VALUE"
+    _redis_url = ""
 
 REDIS_CONFIG = {
     "endpoint": _redis_endpoint,
