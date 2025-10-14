@@ -4,7 +4,10 @@
 
 Customer Support Engineers handle incidents across multiple tools: Zendesk tickets, Datadog alerts, Confluence runbooks, etc. When automating this with MCP agents, you can access 170+ tools across these services. But sending all tool schemas in every request causes inaccurate tool selection, high token costs, and slow responses. This demo uses Redis vector search to pre-filter tools before the LLM sees them, finding the 2-3 most relevant tools. This reduces context size by 98% while providing accurate semantic search, significantly lower token costs, and real-time performance.
 
-**What this demo does:** Run a web interface where you can submit customer support queries (e.g., "check service health for checkout API"). The demo compares two approaches side-by-side: sending all 170+ tools to the LLM (baseline) vs. using Redis to filter to the top 2-3 relevant tools first (optimized). You'll see the difference in response time, token usage, and tool selection accuracy. 
+**What this demo does:** Run a web interface where you can submit customer support queries (e.g., "Create a high priority incident regarding a payment service outage"). The demo compares two approaches side-by-side: sending all 170+ tools to the LLM (baseline) vs. using Redis to filter to the top 2-3 relevant tools first (optimized). You'll see the difference in response time, token usage, and tool selection accuracy.
+
+![Application UI Example](application_ui_example.png)
+*Side-by-side comparison showing token usage, cost, and response time differences between unfiltered and Redis-optimized approaches* 
 
 ## Prerequisites
 
