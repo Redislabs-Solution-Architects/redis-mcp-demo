@@ -42,6 +42,30 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Verify Python version in venv
+PYTHON_VERSION=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+PYTHON_MAJOR=$(echo $PYTHON_VERSION | cut -d'.' -f1)
+PYTHON_MINOR=$(echo $PYTHON_VERSION | cut -d'.' -f2)
+
+if [ "$PYTHON_MAJOR" -lt 3 ] || ([ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -lt 10 ]); then
+    echo -e "${RED}[ERROR]${NC} Python 3.10+ required (found: Python $PYTHON_VERSION)"
+    echo ""
+    echo "Your virtual environment was created with Python $PYTHON_VERSION"
+    echo "You need Python 3.10-3.13 for this demo."
+    echo ""
+    echo "Fix this by:"
+    echo "  1. Install Python 3.10-3.13 from https://python.org/"
+    echo "  2. Remove the old venv: rm -rf venv"
+    echo "  3. Run setup again: ./setup.sh"
+    exit 1
+fi
+
+if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 14 ]; then
+    echo -e "${YELLOW}[WARN]${NC} Python $PYTHON_VERSION may have compatibility issues"
+    echo "Recommended: Python 3.10-3.13"
+    echo ""
+fi
+
 # Get port from config
 DEMO_PORT=$(python3 -c "from config import DEMO_CONFIG; print(DEMO_CONFIG['port'])" 2>/dev/null)
 
